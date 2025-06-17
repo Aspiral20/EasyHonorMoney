@@ -67,7 +67,33 @@ local function FormatGoldString(g, s, c)
     return string.format("|cffffd700%dg|r |cffc7c7cf%ds|r |cffeda55f%dc|r", g, s, c)
 end
 
+local function GetFreeBagSlots()
+    local free = 0
+    for bag = 0, 4 do
+        local freeSlots = C_Container.GetContainerNumFreeSlots(bag)
+        if freeSlots then
+            free = free + freeSlots
+        end
+    end
+    return free
+end
+
 EHM.DUMP = DumpTable
 EHM.CreateLoadingFunction = CreateLoadingFunction
 EHM.GetProgressBar = GetProgressBar
 EHM.FormatGoldString = FormatGoldString
+EHM.GetFreeBagSlots = GetFreeBagSlots
+
+SLASH_EHMPRINT1 = EHM.COMMANDS.LIST
+SlashCmdList["EHMPRINT"] = function()
+    if not EHM_DB or not EHM_DB.USED_ITEM then
+        print("No items in DB.")
+        return
+    end
+
+    print("EHM_DB Items:")
+    for i, id in ipairs(EHM_DB.USED_ITEM) do
+        local name = GetItemInfo(id) or "Unknown"
+        print(i .. ". " .. name .. " (ID: " .. id .. ")")
+    end
+end

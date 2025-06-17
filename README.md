@@ -14,6 +14,7 @@ I recommend to create macros for them. (in future gonna add ui and features like
 
 For work you need to speak with "Sergeant Major Clate" (which is in stormwind), and use as commands described below, in chat or macroses.
 
+## Commands
 1. /ehm_b or /EHM_B or /EasyHonorMoney_Buy (Buy items, pretty fast)
 2. /ehm_e or /EHM_E or /EasyHonorMoney_Equip (Equip items, pretty fast)
 3. /ehm_s or /EHM_S or /EasyHonorMoney_Sell (Sell items, pretty fast)

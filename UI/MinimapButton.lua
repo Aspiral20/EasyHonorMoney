@@ -1,7 +1,7 @@
 local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("EasyHonorMoney", {
     type = "data source",
     text = "EHM",
-    icon = "Interface\\Icons\\inv_misc_coin_01", -- Replace with your icon
+    icon = "Interface\\Icons\\inv_misc_coin_01",
     OnClick = function(_, button)
         if button == "LeftButton" then
             if EHM_MainFrame and _G.EHM_MainFrame:IsShown() then

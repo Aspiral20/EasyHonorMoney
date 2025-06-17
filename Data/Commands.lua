@@ -1,5 +1,6 @@
 EHM.COMMANDS = {
-    DEBUG = "/ehmdebug",
+    DEBUG = "/ehm-debug",
+    LIST = "/ehm-list",
     MAIN = {
         M1 = "/EasyHonorMoney",
         M2 = "/EHM",

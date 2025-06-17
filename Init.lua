@@ -16,6 +16,5 @@ EHM = {
         }
     }
 }
-
 -- Debug
-EHM.DEBUG_MODE = false  -- Set to false to disable debug prints
+EHM.DEBUG_MODE = true  -- Set to false to disable debug prints

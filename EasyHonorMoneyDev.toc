@@ -1,7 +1,7 @@
-# File last updated: 2025-06-17T15:05:00Z
+# File last updated: 2025-06-17T23:39:00Z
 
 ## Interface: 11507, 40402, 110105
-## Title: EasyHonorMoney
+## Title: EasyHonorMoneyDev
 ## Notes: Provides flexible ui with some features which help users to automatically buy, equip, sell honor items.
 ## Author: Aspiral
 ## Version: 1.1.0
@@ -15,7 +15,6 @@ Libs\AceSerializer-3.0\AceSerializer-3.0.lua
 Libs\AceTimer-3.0\AceTimer-3.0.lua
 Libs\LibStub\LibStub.lua
 
-
 # Initialization
 Init.lua
 
@@ -25,8 +24,12 @@ Data/Fonts.lua
 Data/Commands.lua
 Data/Currencies.lua
 Data/Character.lua
+Data/Merchants.lua
 Data/Items.lua
 Data/Globals.lua
+
+# Initialization DB
+InitDB.lua
 
 # Pre-Helpers
 Debug.lua

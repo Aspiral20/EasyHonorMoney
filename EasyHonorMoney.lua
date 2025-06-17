@@ -4,22 +4,11 @@
 -- You can test selling with /run UseContainerItem(bag, slot) to see it work live.
 -- You could also log how many were sold or track honor gained per loop if needed.
 
-local currentItem = EHM.Items[18441]
-
-local function GetFreeBagSlots()
-    local free = 0
-    for bag = 0, 4 do
-        local freeSlots = C_Container.GetContainerNumFreeSlots(bag)
-        if freeSlots then
-            free = free + freeSlots
-        end
-    end
-    return free
-end
+local currentItem = EHM_DB.USED_ITEM or EHM.Items[18441]
 
 local function RunEHMLoop()
     local honor = GetCurrencyInfo(EHM.HONOR_INDEX).quantity
-    local freeBagSlots = GetFreeBagSlots()
+    local freeBagSlots = EHM.GetFreeBagSlots()
     local itemID = currentItem.index
     local itemName, _, _, _, _, _, _, _, equipSlotName, _, vendorPrice = GetItemInfo(currentItem.index)
 
@@ -108,7 +97,7 @@ local function RunEHMLoop()
 end
 
 local function RunEHMBuy()
-    local freeBagSlots = GetFreeBagSlots()
+    local freeBagSlots = EHM.GetFreeBagSlots()
     EHM.MODULES.BuyItemsIfEnoughHonor(currentItem.index, freeBagSlots)
 end
 

@@ -8,11 +8,10 @@ EHM_BodyContent:SetHeight(EHM_MainBodyFrame:GetHeight())
 EHM_BodyContent:SetPoint("TOPRIGHT")
 EHM_BodyContent:SetPoint("BOTTOMRIGHT")
 EHM_BodyContent:SetBackdrop({
-    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",  -- Background texture
-    -- edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",         -- Border texture
+    bgFile = EHM.BACKGROUND_POPUP,
     edgeSize = EHM.MAIN_FRAME.BORDER_SIZE,
     insets = { left = EHM.MAIN_FRAME.BORDER_INSET, right = EHM.MAIN_FRAME.BORDER_INSET, top = EHM.MAIN_FRAME.BORDER_INSET, bottom = EHM.MAIN_FRAME.BORDER_INSET }
 })
-EHM_BodyContent:SetBackdropColor(0, 0, 0, 0.9)
+EHM_BodyContent:SetBackdropColor(0, 0, 0, EHM.BACKGROUND_OPACITY)
 
 EHM.UI.MAIN_FRAME.BODY.EHM_BodyContent = EHM_BodyContent
