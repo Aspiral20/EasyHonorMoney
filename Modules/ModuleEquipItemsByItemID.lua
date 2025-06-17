@@ -165,10 +165,12 @@ local function EquipItemsByItemID_SeparateCall(itemID)
     -- Determine correct equip slot from itemID
     local function GetEquipSlot(itemID)
         local itemEquipLoc = select(9, GetItemInfo(itemID)) -- e.g., "INVTYPE_CLOAK"
+        print(CHAR_SLOT_INDEX[itemEquipLoc])
         return CHAR_SLOT_INDEX[itemEquipLoc], itemEquipLoc
     end
 
     local equipSlot, equipLoc = GetEquipSlot(itemID)
+    print(equipSlot, equipLoc)
     if not equipSlot then
         print("Unknown equip slot for itemID:", itemID)
         return

@@ -9,8 +9,8 @@ local currentItem = EHM_DB.USED_ITEM or EHM.Items[18441]
 local function RunEHMLoop()
     local honor = GetCurrencyInfo(EHM.HONOR_INDEX).quantity
     local freeBagSlots = EHM.GetFreeBagSlots()
-    local itemID = currentItem.index
-    local itemName, _, _, _, _, _, _, _, equipSlotName, _, vendorPrice = GetItemInfo(currentItem.index)
+    local itemID = EHM_DB.USED_ITEM.index or currentItem.index
+    local itemName, _, _, _, _, _, _, _, equipSlotName, _, vendorPrice = GetItemInfo(itemID)
 
     local function continueLoop()
         EHM.MODULES.EquipItemsByItemID(itemID, equipSlotName, function(success)
@@ -96,17 +96,17 @@ local function RunEHMLoop()
     -- print("Free slots:", freeBagSlots)
 end
 
-local function RunEHMBuy()
+local function RunEHMBuy(itemId)
     local freeBagSlots = EHM.GetFreeBagSlots()
-    EHM.MODULES.BuyItemsIfEnoughHonor(currentItem.index, freeBagSlots)
+    EHM.MODULES.BuyItemsIfEnoughHonor(EHM_DB.USED_ITEM.index or currentItem.index, freeBagSlots)
 end
 
 local function RunEHMEquip()
-    EHM.MODULES.EquipItemsByItemID_SeparateCall(currentItem.index)
+    EHM.MODULES.EquipItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index or currentItem.index)
 end
 
 local function RunEHMSell()
-    EHM.MODULES.SellItemsByItemID_SeparateCall(currentItem.index)
+    EHM.MODULES.SellItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index or currentItem.index)
 end
 
 -- All together (slower)
