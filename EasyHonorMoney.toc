@@ -1,0 +1,54 @@
+# File last updated: 2025-06-17T15:05:00Z
+
+## Interface: 11507, 40402, 110105
+## Title: EasyHonorMoney
+## Notes: Provides flexible ui with some features which help users to automatically buy, equip, sell honor items.
+## Author: Aspiral
+## Version: 1.1
+
+## OptionalDeps: LibStub, LibDataBroker-1.1, LibDBIcon-1.0
+## SavedVariables: EHM_DB
+
+# External
+Libs\AceComm-3.0\AceComm-3.0.lua
+Libs\AceSerializer-3.0\AceSerializer-3.0.lua
+Libs\AceTimer-3.0\AceTimer-3.0.lua
+Libs\LibStub\LibStub.lua
+
+
+# Initialization
+Init.lua
+
+# Data
+Data/Colors.lua
+Data/Fonts.lua
+Data/Commands.lua
+Data/Currencies.lua
+Data/Character.lua
+Data/Items.lua
+Data/Globals.lua
+
+# Pre-Helpers
+Debug.lua
+Helpers.lua
+
+# Modules
+Modules/ModuleBuyItemIfEnoughHonor.lua
+Modules/ModuleEquipItemsByItemID.lua
+Modules/ModuleSellItemsByItemID.lua
+
+# UI Components
+UI/Components/Button.lua
+
+# Core
+EasyHonorMoney.lua
+
+# UI
+UI/MainFrame/MainFrame.lua
+UI/MainFrame/TitleBar.lua
+UI/MainFrame/Body/MainBodyFrame.lua
+UI/MainFrame/Body/SideBar.lua
+UI/MainFrame/Body/BodyContent.lua
+UI/MinimapButton.lua
+UI/Settings.lua
+UI/VendorPopUp.lua

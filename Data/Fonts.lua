@@ -1,0 +1,5 @@
+EHM.FONTS = {
+    FRIZQT = "Fonts\\FRIZQT__.TTF",
+}
+
+EHM.TITLE_FONT = EHM.FONTS.FRIZQT

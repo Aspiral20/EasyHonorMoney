@@ -1,0 +1,25 @@
+EHM.CHAR_SLOT_INDEX = {
+    INVTYPE_HEAD           = 1,
+    INVTYPE_NECK           = 2,
+    INVTYPE_SHOULDER       = 3,
+    INVTYPE_BODY           = 4,   -- Shirt
+    INVTYPE_CHEST          = 5,
+    INVTYPE_ROBE           = 5,   -- Robe also uses Chest slot
+    INVTYPE_WAIST          = 6,
+    INVTYPE_LEGS           = 7,
+    INVTYPE_FEET           = 8,
+    INVTYPE_WRIST          = 9,
+    INVTYPE_HAND           = 10,
+    INVTYPE_FINGER         = 11,  -- First ring slot
+    INVTYPE_FINGER2        = 12,  -- Second ring slot
+    INVTYPE_TRINKET        = 13,  -- First trinket slot
+    INVTYPE_TRINKET2       = 14,  -- Second trinket slot
+    INVTYPE_BACK           = 15,  -- Cloak
+    INVTYPE_CLOAK          = 15,  -- Alias
+    INVTYPE_MAINHAND       = 16,  -- Main-hand weapon
+    INVTYPE_OFFHAND        = 17,  -- Off-hand / secondary
+    INVTYPE_HOLDABLE       = 17,  -- Holds (e.g., wands)
+    INVTYPE_RANGED         = 18,
+    INVTYPE_RANGEDRIGHT    = 18,  -- Alias for ranged slot
+    INVTYPE_TABARD         = 19,  -- Tabard slot
+}
