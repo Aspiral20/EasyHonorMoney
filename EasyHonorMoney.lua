@@ -20,11 +20,11 @@ local function RunEHMLoop()
                         -- print("Looping again...")
                         -- C_Timer.After(1, RunEHMLoop)
                     else
-                        print("Sell step failed")
+                        EHM.Notifications(EHM.CHAR_COLORS.red, "Sell step failed")
                     end
                 end)
             else
-                print("Equip step failed")
+                EHM.Notifications(EHM.CHAR_COLORS.red, "Equip step failed")
             end
         end)
     end
@@ -47,10 +47,10 @@ local function RunEHMLoop()
         end
 
         if not hasItemInBag then
-            print("Stopping: Not enough honor and no items left in bag.")
+            EHM.Notifications(EHM.CHAR_COLORS.red, "Stopping: Not enough honor and no items left in bag.")
             return
         else
-            print("Honor too low, but still items in bag → processing them...")
+            EHM.Notifications(EHM.CHAR_COLORS.red, "Honor too low, but still items in bag → processing them...")
             continueLoop()
             return
         end
@@ -60,40 +60,9 @@ local function RunEHMLoop()
         if success then
             continueLoop()
         else
-            print("Buying failed.")
+            EHM.Notifications(EHM.CHAR_COLORS.red, "Buying failed.")
         end
     end)
-    
-    -- EHM.MODULES.BuyItemsIfEnoughHonor(currentItem.index, freeBagSlots)
-    -- EHM.MODULES.EquipItemsByItemID(currentItem.index, equipSlotName)
-
-    -- EHM.MODULES.BuyItemsIfEnoughHonor(currentItem.index, freeBagSlots, function(success)
-    --     if success then
-    --         print("All items bought!")
-    --         C_Timer.After(4, function()
-    --             EHM.MODULES.EquipItemsByItemID(currentItem.index, equipSlotName)
-    --             C_Timer.After(6, function()
-    --                 EHM.MODULES.SellItemsByItemID(currentItem.index, {itemName = itemName, vendorPrice = vendorPrice})
-    --             end)
-    --         end)
-    --     else
-    --         print("Buying failed")
-    --     end
-    -- end)
-
-    -- C_Timer.After(2, function()
-        -- EHM.MODULES.EquipItemsByItemID(currentItem.index, equipSlotName)
-
-        -- C_Timer.After(4, function()
-            -- EHM.MODULES.SellItemsByItemID(currentItem.index, {itemName = itemName, vendorPrice = vendorPrice})
-
-            -- C_Timer.After(1, RunEHM)
-        -- end)
-
-    -- end)
-    -- print("EHM Stats:")
-    -- print("Honor:", honor)
-    -- print("Free slots:", freeBagSlots)
 end
 
 local function RunEHMBuy(itemId)

@@ -16,7 +16,7 @@ function EHM:CreateButton(name, parent, width, height, text, onClick, opts)
         local success, err = pcall(onClick, self)
 
         if not success then
-            print("Error:", err)
+            EHM.Notifications(EHM.CHAR_COLORS.red, "Error:", err)
         end
 
         self.isLoading = false

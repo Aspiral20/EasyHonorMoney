@@ -30,7 +30,7 @@ local function CreateLoadingFunction(func)
 
     return function(...)
         if isLoading then
-            print("Action already in progress...")
+            EHM.Notifications("Action already in progress...")
             return
         end
 
@@ -67,6 +67,14 @@ local function FormatGoldString(g, s, c)
     return string.format("|cffffd700%dg|r |cffc7c7cf%ds|r |cffeda55f%dc|r", g, s, c)
 end
 
+local function FormatGoldWithIcons(g, s, c)
+    local out = ""
+    if g > 0 then out = out .. g .. "|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t " end
+    if s > 0 or (g > 0 and c > 0) then out = out .. s .. "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t " end
+    if c > 0 or (g == 0 and s == 0) then out = out .. c .. "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" end
+    return out
+end
+
 local function GetFreeBagSlots()
     local free = 0
     for bag = 0, 4 do
@@ -78,20 +86,49 @@ local function GetFreeBagSlots()
     return free
 end
 
+function EHM.Notifications(...)
+    local args = { ... }
+    local firstArg = args[1]
+
+    local prefixColor = EHM.CHAR_COLORS.green
+    local startIndex = 1
+
+    -- If first arg is a known color code, use it
+    for _, color in pairs(EHM.CHAR_COLORS) do
+        if firstArg == color then
+            prefixColor = firstArg
+            startIndex = 2
+            break
+        end
+    end
+
+    local message = ""
+    for i = startIndex, #args do
+        message = message .. tostring(args[i])
+        if i < #args then
+            message = message .. " "
+        end
+    end
+
+    print(prefixColor .. "[EHM]" .. EHM.CHAR_COLORS.reset .. " " .. message)
+end
+
+
 EHM.DUMP = DumpTable
 EHM.CreateLoadingFunction = CreateLoadingFunction
 EHM.GetProgressBar = GetProgressBar
 EHM.FormatGoldString = FormatGoldString
+EHM.FormatGoldWithIcons = FormatGoldWithIcons
 EHM.GetFreeBagSlots = GetFreeBagSlots
 
 SLASH_EHMPRINT1 = EHM.COMMANDS.LIST
 SlashCmdList["EHMPRINT"] = function()
     if not EHM_DB or not EHM_DB.USED_ITEM then
-        print("No items in DB.")
+        EHM.Notifications(EHM.CHAR_COLORS.lightBlue, "No items in DB.")
         return
     end
 
-    print("EHM_DB Items:")
+    EHM.Notifications(EHM.CHAR_COLORS.lightBlue, "EHM_DB Items:")
     for i, id in ipairs(EHM_DB.USED_ITEM) do
         local name = GetItemInfo(id) or "Unknown"
         print(i .. ". " .. name .. " (ID: " .. id .. ")")

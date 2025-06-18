@@ -9,7 +9,7 @@ local LDB = LibStub("LibDataBroker-1.1"):NewDataObject("EasyHonorMoney", {
             elseif EHM_MainFrame then
                 EHM_MainFrame:Show()
             else
-                print("EHM_MainFrame not loaded yet.")
+                -- EHM.debugPrint("EHM_MainFrame not loaded yet.")
             end
         end
     end,

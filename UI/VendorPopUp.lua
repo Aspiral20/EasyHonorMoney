@@ -155,18 +155,14 @@ function EHM_HonorVendor:BuildPopup()
 
             btn:SetScript("OnClick", function()
                 if not canAfford then
-                --     print("|cffff0000You don't have enough Honor points to buy this item.|r")
+                -- You don't have enough Honor points to buy this item.
                     return
                 end
                 if IsItemAdded(itemID) then
-                --     print("|cff00ff00Item already added to DB.|r")
+                -- Item already added to DB.
                     return
                 end
                 EHM_DB.USED_ITEM = EHM.Items[itemID]
-                -- print(string.format(
-                --     "|cff00ff00[EHM]|r Set %s (ID: %d) as your selected item.",
-                --     itemData.name or "Unknown", itemID
-                -- ))
                 EHM_HonorVendor:BuildPopup() -- <- add this
             end)
 

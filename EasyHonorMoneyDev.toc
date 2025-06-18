@@ -35,6 +35,9 @@ InitDB.lua
 Debug.lua
 Helpers.lua
 
+# Events
+Events/MerchantEvent.lua
+
 # Modules
 Modules/ModuleBuyItemIfEnoughHonor.lua
 Modules/ModuleEquipItemsByItemID.lua

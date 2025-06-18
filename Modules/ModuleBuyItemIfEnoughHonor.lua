@@ -16,16 +16,24 @@ local function FindMerchantSlotByItemID(itemID)
     return nil
 end
 
+EHM.MerchantEventFrame:SetScript("OnEvent", function(self, event)
+    if event == "MERCHANT_CLOSED" then
+        isCancelled = true
+    end
+end)
+
 local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
+    isCancelled = false -- reset on new call
+    
     if GetMerchantNumItems() == 0 then
-        print("Please talk to vendor!")
+        EHM.Notifications(" Please talk to vendor.")
         if callback then callback(false) end
         return
     end
 
     local slot = FindMerchantSlotByItemID(itemID)
     if not slot then
-        print("Item not found at vendor")
+        EHM.Notifications(" Item not found at vendor.")
         if callback then callback(false) end
         return
     end
@@ -36,9 +44,20 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
     local bought = 0
 
     local function BuyBatch()
+        if isCancelled then
+            EHM.Notifications(EHM.CHAR_COLORS.yellow, "Purchase cancelled (merchant closed).")
+            if callback then callback(false) end
+            return
+        end
         local batchCount = math.min(MAX_BUY_PER_BATCH, remaining - bought)
 
         local function BuyNextInBatch(i)
+            if isCancelled then
+                EHM.Notifications(EHM.CHAR_COLORS.yellow, "Purchase cancelled during batch.")
+                if callback then callback(false) end
+                return
+            end
+
             if i > batchCount then
                 if bought < remaining then
                     -- Delay before next batch
@@ -61,17 +80,7 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
         BuyNextInBatch(1)
     end
 
-    -- if remaining <= 0 then
-    --     print("Not enough honor or items requested is zero")
-    --     if callback then callback(false) end
-    --     return
-    -- end
-
     BuyBatch()
 end
 
--- local function BuyItemsIfEnoughHonor_SeparateCall(itemID)
--- end
-
 EHM.MODULES.BuyItemsIfEnoughHonor = BuyItemsIfEnoughHonor
--- EHM.MODULES.BuyItemsIfEnoughHonor_SeparateCall = BuyItemsIfEnoughHonor_SeparateCall

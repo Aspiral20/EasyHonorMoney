@@ -1,96 +1,10 @@
--- local MAX_SELL_PER_BATCH = 15
--- local SELL_DELAY = 0.1  -- delay between each item sold
--- local BATCH_DELAY = 0.5 -- delay between batches
-
--- local function SellItemsByItemID(itemID, itemData, callback)
---     if GetMerchantNumItems() == 0 then
---         print("Please speak with vendor to open merchant items!")
---         if callback then callback(false) end
---         return
---     end
-
---     itemData = itemData or {itemName = "Item", vendorPrice = 0}
---     local itemName = itemData.itemName
---     local vendorPrice = itemData.vendorPrice
-
---     local totalGoldEarned = 0
---     local soldCount = 0
---     local itemsToSell = {}
-
---     -- Collect items
---     for bag = 0, 4 do
---         for slot = 1, C_Container.GetContainerNumSlots(bag) do
---             local link = C_Container.GetContainerItemLink(bag, slot)
---             if link then
---                 local foundID = tonumber(link:match("item:(%d+):"))
---                 if foundID == itemID then
---                     table.insert(itemsToSell, {bag = bag, slot = slot})
---                 end
---             end
---         end
---     end
-
---     if #itemsToSell == 0 then
---         print("No items found to sell:", itemName)
---         if callback then callback(false) end
---         return
---     end
-
---     local function SellItemsLoop() end -- forward declare
-
---     local function SellBatch(batch)
---         local index = 1
-
---         local function SellNext()
---             if index > #batch then
---                 -- wait before next batch
---                 C_Timer.After(BATCH_DELAY, SellItemsLoop)
---                 return
---             end
-
---             local info = batch[index]
---             index = index + 1
-
---             C_Container.UseContainerItem(info.bag, info.slot)
---             soldCount = soldCount + 1
---             totalGoldEarned = totalGoldEarned + vendorPrice
-
---             C_Timer.After(SELL_DELAY, SellNext)
---         end
-
---         SellNext()
---     end
-
---     function SellItemsLoop()
---         if #itemsToSell == 0 then
---             local gold = math.floor(totalGoldEarned / 10000)
---             local silver = math.floor((totalGoldEarned % 10000) / 100)
---             local copper = totalGoldEarned % 100
---             print(string.format("Sold %d × %s, earned %dg %ds %dc", soldCount, itemName, gold, silver, copper))
---             if callback then callback(true) end
---             return
---         end
-
---         local batch = {}
---         for i = 1, MAX_SELL_PER_BATCH do
---             local item = table.remove(itemsToSell, 1)
---             if not item then break end
---             table.insert(batch, item)
---         end
-
---         SellBatch(batch)
---     end
-
---     SellItemsLoop()
--- end
-
 local MAX_SELL_PER_BATCH = 15
 local SELL_DELAY = 0  -- safe minimum delay between items
 local BATCH_DELAY = 0.01 -- slight delay between batches
 
 local function SellItemsByItemID(itemID, itemData, callback)
     if GetMerchantNumItems() == 0 then
-        print("Please speak with a vendor!")
+        EHM.Notifications("Please speak with a vendor!")
         if callback then callback(false) end
         return
     end
@@ -135,7 +49,7 @@ local function SellItemsByItemID(itemID, itemData, callback)
         -- local g = math.floor(totalGoldEarned / 10000)
         -- local s = math.floor((totalGoldEarned % 10000) / 100)
         -- local c = totalGoldEarned % 100
-        -- print(string.format("Sold %d × %s, earned %dg %ds %dc", soldCount, itemName, g, s, c))
+        -- EHM.Notifications(string.format("Sold %d × %s, earned %dg %ds %dc", soldCount, itemName, g, s, c))
 
         if callback then callback(true) end
     end
@@ -144,11 +58,23 @@ local function SellItemsByItemID(itemID, itemData, callback)
     SellNext()
 end
 
+local isSellingCancelled = false
+
+-- Reuse eventFrame from previous buy function, but extend it:
+EHM.MerchantEventFrame:HookScript("OnEvent", function(self, event)
+    if event == "MERCHANT_CLOSED" then
+        isSellingCancelled = true
+        isCancelled = true -- if also running buy at same time
+    end
+end)
+
 local function SellItemsByItemID_SeparateCall(itemID)
     if GetMerchantNumItems() == 0 then
-        print("Please speak with a vendor before selling items.")
+        EHM.Notifications(" Please speak with a vendor before selling items.")
         return
     end
+    
+    isSellingCancelled = false
 
     local C = C_Container
     local vendorPrice = 0
@@ -176,11 +102,17 @@ local function SellItemsByItemID_SeparateCall(itemID)
 
     -- Step 2: Sell items one by one with short delay
     local function SellNext()
-        if #itemsToSell == 0 then
+        if #itemsToSell == 0 or isSellingCancelled then
             local g = math.floor(totalGoldEarned / 10000)
             local s = math.floor((totalGoldEarned % 10000) / 100)
             local c = totalGoldEarned % 100
-            print(string.format("Sold %d × itemID %d, earned %s", soldCount, itemID, EHM.FormatGoldString(g, s, c)))
+            local goldString = EHM.FormatGoldWithIcons(g, s, c)
+
+            if isSellingCancelled and #itemsToSell > 0 then
+                EHM.Notifications(EHM.CHAR_COLORS.yellow, string.format(" Selling cancelled early — sold %d/%d × itemID %d, earned %s", soldCount, totalItems, itemID, goldString))
+            else
+                EHM.Notifications(string.format("Sold %d × itemID %d, earned %s", soldCount, itemID, goldString))
+            end
             return
         end
 
@@ -196,7 +128,7 @@ local function SellItemsByItemID_SeparateCall(itemID)
             local s = math.floor((totalGoldEarned % 10000) / 100)
             local c = totalGoldEarned % 100
             local bar = EHM.GetProgressBar(soldCount, totalItems)
-            print(string.format("%s %d/%d sold — %s earned", bar, soldCount, totalItems, EHM.FormatGoldString(g, s, c)))
+            EHM.Notifications(string.format("%s %d/%d sold — %s earned", bar, soldCount, totalItems, EHM.FormatGoldWithIcons(g, s, c)))
         end
 
         C_Timer.After(0.15, SellNext)

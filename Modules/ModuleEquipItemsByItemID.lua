@@ -84,7 +84,7 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
 
     -- Accept equipSlotName like "INVTYPE_CLOAK" and convert it to numeric slot
     if not equipSlot then
-        print("Invalid equip slot:", equipSlotName)
+        EHM.Notifications(EHM.CHAR_COLORS.red, "Invalid equip slot:", equipSlotName)
         if callback then callback(false) end
         return
     end
@@ -106,7 +106,7 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
     end
 
     if #itemsToEquip == 0 then
-        print("No items found with itemID:", itemID)
+        EHM.Notifications("No items found with itemID:", itemID)
         if callback then callback(false) end
         return
     end
@@ -125,7 +125,7 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
                     if foundID == originalItemID then
                         C.PickupContainerItem(bag, slot)
                         EquipCursorItem(equipSlot)
-                        print("Re-equipped original item.")
+                        EHM.Notifications("Re-equipped original item.")
                         if callback then callback(true) end
                         return
                     end
@@ -133,7 +133,7 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
             end
         end
 
-        print("Original item not found to re-equip.")
+        EHM.Notifications("Original item not found to re-equip.")
         if callback then callback(true) end
     end
 
@@ -169,9 +169,8 @@ local function EquipItemsByItemID_SeparateCall(itemID)
     end
 
     local equipSlot, equipLoc = GetEquipSlot(itemID)
-    print(equipSlot, equipLoc)
     if not equipSlot then
-        print("Unknown equip slot for itemID:", itemID)
+        EHM.Notifications("Unknown equip slot for itemID:", itemID)
         return
     end
 
@@ -201,7 +200,7 @@ local function EquipItemsByItemID_SeparateCall(itemID)
     end
 
     if #itemsToEquip == 0 then
-        print("No items found with itemID:", itemID)
+        EHM.Notifications(EHM.CHAR_COLORS.red, "No items found with itemID:", itemID)
         return
     end
 
@@ -231,15 +230,15 @@ local function EquipItemsByItemID_SeparateCall(itemID)
                             if foundID == originalItemID then
                                 C.PickupContainerItem(bag, slot)
                                 EquipCursorItem(equipSlot)
-                                print("Re-equipped original item.")
+                                EHM.Notifications(EHM.CHAR_COLORS.yellow, "Re-equipped original item.")
                                 return
                             end
                         end
                     end
                 end
-                print("Original item not found in bags.")
+                EHM.Notifications(EHM.CHAR_COLORS.red, "Original item not found in bags.")
             else
-                print("Original item already equipped.")
+                EHM.Notifications(EHM.CHAR_COLORS.yellow, "Original item already equipped.")
             end
         end)
     end
