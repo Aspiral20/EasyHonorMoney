@@ -125,7 +125,6 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
                     if foundID == originalItemID then
                         C.PickupContainerItem(bag, slot)
                         EquipCursorItem(equipSlot)
-                        EHM.Notifications("Re-equipped original item.")
                         if callback then callback(true) end
                         return
                     end
@@ -230,7 +229,6 @@ local function EquipItemsByItemID_SeparateCall(itemID)
                             if foundID == originalItemID then
                                 C.PickupContainerItem(bag, slot)
                                 EquipCursorItem(equipSlot)
-                                EHM.Notifications(EHM.CHAR_COLORS.yellow, "Re-equipped original item.")
                                 return
                             end
                         end

@@ -8,14 +8,14 @@ EasyHonorMoney is a World of Warcraft Cataclism Classic Addon which provides fle
 
 ## How it works ?
 
-There're 4 commands, but 3 usable atm.
+There are 4 commands available, but only 3 are usable at the moment.
 
-I recommend to create macros for them. (in future gonna add ui and features like comparing items by price and profit)
+I recommend creating macros for them. (A UI and more features like item price and profit comparison will be added in the future)
 
-For work you need to speak with "Sergeant Major Clate" (which is in stormwind), and use as commands described below, in chat or macroses.
+To use the addon, speak with Sergeant Major Clate (located in Stormwind), then use the commands described below, either in chat or through macros.
 
 ## Commands
-1. /ehm_b or /EHM_B or /EasyHonorMoney_Buy (Buy items, pretty fast)
-2. /ehm_e or /EHM_E or /EasyHonorMoney_Equip (Equip items, pretty fast)
-3. /ehm_s or /EHM_S or /EasyHonorMoney_Sell (Sell items, pretty fast)
-4. /ehm or /EHM or /EasyHonorMoney (This does all together but it's very slow and may be bugs)
+1. /ehm_b or /EHM_B or /EasyHonorMoney_Buy – Buys items (pretty fast)
+2. /ehm_e or /EHM_E or /EasyHonorMoney_Equip – Equips items (pretty fast)
+3. /ehm_s or /EHM_S or /EasyHonorMoney_Sell – Sells items (pretty fast)
+4. /ehm or /EHM or /EasyHonorMoney – Performs all actions (buy, equip, sell), but it's slower and may have bugs
