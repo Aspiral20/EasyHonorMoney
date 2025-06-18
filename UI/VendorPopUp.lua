@@ -1,5 +1,3 @@
--- ! Add only vendors from array, do not apply to all vendors.
-
 local PopUpWidth = 400
 local PopUpHeight = 160
 
