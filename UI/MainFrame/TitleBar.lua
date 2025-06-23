@@ -21,8 +21,6 @@ EHM_Title:SetJustifyV("MIDDLE")
 EHM_Title:SetFont(EHM.TITLE_FONT, 12, "OUTLINE")
 EHM_Title:SetText("EasyHonorMoney")
 
-EHM.UI.MAIN_FRAME.EHM_TitleBar = EHM_TitleBar
-
 -- Close Button
 local buttonSize = 24
 local padding = 6
@@ -34,3 +32,5 @@ EHM_Title:SetJustifyH("CENTER")
 closeButton:SetScript("OnClick", function()
     EHM_MainFrame:Hide()
 end)
+
+EHM.UI.MAIN_FRAME.EHM_TitleBar = EHM_TitleBar

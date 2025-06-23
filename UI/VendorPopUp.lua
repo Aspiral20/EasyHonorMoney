@@ -36,28 +36,6 @@ local buttons = {}
 
 local minimized = false -- track minimize state
 
-local function IsItemAdded(itemID)
-    if not EHM_DB or not EHM_DB.USED_ITEM then return false end
-    for _, id in ipairs(EHM_DB.USED_ITEM) do
-        if id == itemID then return true end
-    end
-    return false
-end
-
-local function GetPlayerHonor()
-    local honorPoints = 0
-    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(390) -- Honor ID
-    if currencyInfo then honorPoints = currencyInfo.quantity or 0 end
-    return honorPoints
-end
-
-local function GetMerchantItemID(merchantIndex)
-    local link = GetMerchantItemLink(merchantIndex)
-    if not link then return nil end
-    local itemID = tonumber(link:match("item:(%d+):"))
-    return itemID
-end
-
 local faction = UnitFactionGroup("player")
 local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
 
@@ -96,8 +74,10 @@ closeBtn:SetScript("OnClick", function()
     EHM_HonorVendor:Hide()
 end)
 
+honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t"
+
 function EHM_HonorVendor:BuildPopup()
-    -- Clear old buttons
+    -- Clear old buttons after changing "EHM_DB.USED_ITEM"
     for _, btn in ipairs(buttons) do
         btn:Hide()
         btn:SetScript("OnClick", nil)
@@ -108,9 +88,8 @@ function EHM_HonorVendor:BuildPopup()
             btn.honorIcon:Hide()
         end
     end
-    buttons = {}
-
-    local playerHonor = GetPlayerHonor()
+    
+    local playerHonor = EHM.GetPlayerHonor()
     local foundAny = false
 
     local xStart, yStart = 20, -80
@@ -119,14 +98,17 @@ function EHM_HonorVendor:BuildPopup()
     local maxButtonsPerRow = 6
     local currentX, currentY = xStart, yStart
     local buttonsInRow = 0
+    -- For estimated gold/4k honor
+    local honorToUse = 4000
+    local totalGold, totalSilver, totalCopper = 0, 0, 0
+    local itemsBought, totalSellValue = 0, 0
 
     for i = 1, GetMerchantNumItems() do
-        local itemID = GetMerchantItemID(i)
+        local itemID = EHM.GetMerchantItemID(i)
         local itemData = EHM.Items[itemID]
 
         if itemID and itemData then
             local canAfford = playerHonor >= itemData.price
-            local added = IsItemAdded(itemID)
 
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..itemID, EHM_HonorVendor.content, "SecureActionButtonTemplate")
             btn:SetSize(btnSize, btnSize)
@@ -158,12 +140,11 @@ function EHM_HonorVendor:BuildPopup()
                 -- You don't have enough Honor points to buy this item.
                     return
                 end
-                if IsItemAdded(itemID) then
+                if EHM.IsItemAdded(itemID) then
                 -- Item already added to DB.
                     return
                 end
-                EHM_DB.USED_ITEM = EHM.Items[itemID]
-                EHM_HonorVendor:BuildPopup() -- <- add this
+                EHM.SetUsedItem(itemID)
             end)
 
             if not btn.priceText then
@@ -180,6 +161,51 @@ function EHM_HonorVendor:BuildPopup()
                 btn.honorIcon:SetTexture(honorIconPath)
             end
             btn.honorIcon:SetShown(true)
+
+            -- Create info icon for gold estimate popup
+            if not btn.infoIcon then
+                btn.infoIcon = btn:CreateTexture(nil, "OVERLAY")
+                btn.infoIcon:SetSize(14, 14)
+                btn.infoIcon:SetPoint("RIGHT", btn, "RIGHT", 6, -6)
+                btn.infoIcon:SetTexture("Interface\\COMMON\\help-i") -- Default WoW info icon
+            end
+            btn.infoIcon:SetShown(true)
+
+            -- Tooltip logic
+            btn:SetScript("OnEnter", function(self)
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+                GameTooltip:ClearLines()
+
+                if itemData.money and itemData.price > 0 then
+                    local count = math.floor(honorToUse / itemData.price)
+                    local totalCopper = count * (
+                        (itemData.money.gold or 0) * 10000 +
+                        (itemData.money.silver or 0) * 100 +
+                        (itemData.money.copper or 0)
+                    )
+
+                    local g = math.floor(totalCopper / 10000)
+                    local s = math.floor((totalCopper % 10000) / 100)
+                    local c = totalCopper % 100
+
+                    local honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t"
+                    GameTooltip:AddLine(itemData.name, 1, 1, 1)
+                    GameTooltip:AddLine(string.format("x%d = %s / 4k%s", count, EHM.FormatGoldWithIcons(g, s, c), honorIcon), 1, 0.82, 0)
+                    GameTooltip:AddLine(string.format("Vendor: %s", itemData.merchant.name), 1, 1, 1)
+                    
+                    local fontString = _G["GameTooltipTextLeft1"]
+                    if fontString then
+                        fontString:SetFont("Fonts\\FRIZQT__.TTF", 15, "OUTLINE") -- default size is ~12
+                    end
+                else
+                    GameTooltip:AddLine("No sell value info available", 1, 0, 0)
+                end
+                GameTooltip:Show()
+            end)
+
+            btn:SetScript("OnLeave", function()
+                GameTooltip:Hide()
+            end)
 
             btn:Show()
             table.insert(buttons, btn)
@@ -243,53 +269,51 @@ eventFrame:SetScript("OnEvent", function(self, event)
     end
 end)
 
-
 -- Action Buttons
 -- Ensure the button frame exists only once
-if not EHM_HonorVendor.actionButtons then
-    EHM_HonorVendor.actionButtons = {}
-
-    local bagUpdateFrame = CreateFrame("Frame")
-    bagUpdateFrame:RegisterEvent("BAG_UPDATE")
-    bagUpdateFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-
-    -- Define your actions but leave Buy button text empty for now (update it later)
-    local actions = {
-        { name = "Buy",   command = function() SlashCmdList["EHM_B"]("") end },
-        { name = "Equip", command = function() SlashCmdList["EHM_E"]("") end },
-        { name = "Sell",  command = function() SlashCmdList["EHM_S"]("") end },
-    }
-
-    local startX = 15
-    local spacing = 75
-
-    -- Create buttons once
-    for i, data in ipairs(actions) do
-        local btn = CreateFrame("Button", nil, EHM_HonorVendor.content, "UIPanelButtonTemplate")
-        btn:SetSize(65, 24)
-        btn:SetPoint("TOPLEFT", EHM_HonorVendor.content, "TOPLEFT", startX + (i - 1) * spacing, -39)
-        btn:SetText(data.name)
-        btn:SetScript("OnClick", data.command)
-        EHM_HonorVendor.actionButtons[#EHM_HonorVendor.actionButtons + 1] = btn
-    end
-
-    -- Update Buy button text whenever bag changes
-    local function UpdateBuyButton()
-        local freeBagSlots = EHM.GetFreeBagSlots()
-        local buyButton = EHM_HonorVendor.actionButtons[1] -- Buy button is first
-        if buyButton then
-            buyButton:SetText("Buy (" .. freeBagSlots .. ")")
+EHM.CreateActionButtons(
+    EHM_HonorVendor,
+    {
+        { name = "Buy",   command = function() SlashCmdList[EHM.COMMANDS.BUY.key]("") end },
+        { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end },
+        { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end },
+    },
+    15,
+    -39,
+    75,
+    function(buttons)
+        local bagUpdateFrame = CreateFrame("Frame")
+        bagUpdateFrame:RegisterEvent("BAG_UPDATE")
+        bagUpdateFrame:RegisterEvent("BAG_UPDATE_DELAYED")
+        
+        -- Update Buy button text whenever bag changes
+        local function UpdateBuyButton()
+            local freeBagSlots = EHM.GetFreeBagSlots()
+            local buyButton = EHM_HonorVendor.actionButtons[1] -- Buy button is first
+            if buyButton then
+                buyButton:SetText("Buy (" .. freeBagSlots .. ")")
+            end
         end
-    end
 
-    bagUpdateFrame:SetScript("OnEvent", function(self, event, ...)
+        bagUpdateFrame:SetScript("OnEvent", function(self, event, ...)
+            UpdateBuyButton()
+        end)
+
+        -- Also update once right after creating buttons
         UpdateBuyButton()
-    end)
+    end
+)
 
-    -- Also update once right after creating buttons
-    UpdateBuyButton()
-end
+-- Update vendor popup on BAG_UPDATE or currency change
+-- local honorUpdateFrame = CreateFrame("Frame")
+-- honorUpdateFrame:RegisterEvent("BAG_UPDATE")
+-- honorUpdateFrame:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
 
+-- honorUpdateFrame:SetScript("OnEvent", function()
+--     if EHM_HonorVendor and EHM_HonorVendor:IsShown() then
+--         EHM_HonorVendor:BuildPopup()
+--     end
+-- end)
 
 
 -- local freeBagSlots = EHM.GetFreeBagSlots()

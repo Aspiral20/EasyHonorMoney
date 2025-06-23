@@ -4,18 +4,16 @@
 
 ## About
 
-EasyHonorMoney is a World of Warcraft Cataclism Classic Addon which provides flexible ui with some features which help users to automatically buy, equip, sell honor items.
+EasyHonorMoney is a World of Warcraft Cataclism Classic Addon which provides flexible ui with some features which help users to automatically buy, equip, sell honor items, making as fast as possible gold through this method.
 
 ## How it works ?
 
-There are 4 commands available, but only 3 are usable at the moment.
+To use the addon, speak with one of Merchants(Vendors) which support addon, for examaple: "Sergeant Major Clate" (located in Stormwind).
 
-I recommend creating macros for them. (A UI and more features like item price and profit comparison will be added in the future)
-
-To use the addon, speak with Sergeant Major Clate (located in Stormwind), then use the commands described below, either in chat or through macros.
+If you do not know where to find them, type /ehm in chat and choose "vendors", click on vendor. After that you'll se on map waypoint with the location. (To see waypoints you need to download TomTom addon since on classic is not still available blizzard's waypoints like on retail. Only TomTom colaborate with blizzard's API and can use them)
 
 ## Commands
-1. /ehm_b or /EHM_B or /EasyHonorMoney_Buy – Buys items (pretty fast)
-2. /ehm_e or /EHM_E or /EasyHonorMoney_Equip – Equips items (pretty fast)
-3. /ehm_s or /EHM_S or /EasyHonorMoney_Sell – Sells items (pretty fast)
-4. /ehm or /EHM or /EasyHonorMoney – Performs all actions (buy, equip, sell), but it's slower and may have bugs
+1. /ehm - Open UI
+1. /ehm_b or /EHM_B or /easy-honor-money_buy – Buys items (pretty fast)
+2. /ehm_e or /EHM_E or /easy-honor-money_equip – Equips items (pretty fast)
+3. /ehm_s or /EHM_S or /easy-honor-money_sell – Sells items (pretty fast)

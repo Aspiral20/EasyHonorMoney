@@ -14,5 +14,8 @@ function switchDebugPrint(msg)
 end
 
 -- Command
-SLASH_EHM_DEBUG1 = EHM.COMMANDS.DEBUG
-SlashCmdList.EHM_DEBUG = switchDebugPrint
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.DEBUG.key,
+    EHM.COMMANDS.DEBUG.register
+)
+SlashCmdList[EHM.COMMANDS.DEBUG.key] = switchDebugPrint

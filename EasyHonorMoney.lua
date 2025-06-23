@@ -4,12 +4,10 @@
 -- You can test selling with /run UseContainerItem(bag, slot) to see it work live.
 -- You could also log how many were sold or track honor gained per loop if needed.
 
-local currentItem = EHM_DB.USED_ITEM or EHM.Items[18441]
-
 local function RunEHMLoop()
     local honor = GetCurrencyInfo(EHM.HONOR_INDEX).quantity
     local freeBagSlots = EHM.GetFreeBagSlots()
-    local itemID = EHM_DB.USED_ITEM.index or currentItem.index
+    local itemID = EHM_DB.USED_ITEM.index
     local itemName, _, _, _, _, _, _, _, equipSlotName, _, vendorPrice = GetItemInfo(itemID)
 
     local function continueLoop()
@@ -67,37 +65,89 @@ end
 
 local function RunEHMBuy(itemId)
     local freeBagSlots = EHM.GetFreeBagSlots()
-    EHM.MODULES.BuyItemsIfEnoughHonor(EHM_DB.USED_ITEM.index or currentItem.index, freeBagSlots)
+    EHM.MODULES.BuyItemsIfEnoughHonor(EHM_DB.USED_ITEM.index, freeBagSlots)
 end
 
 local function RunEHMEquip()
-    EHM.MODULES.EquipItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index or currentItem.index)
+    EHM.MODULES.EquipItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index)
 end
 
 local function RunEHMSell()
-    EHM.MODULES.SellItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index or currentItem.index)
+    EHM.MODULES.SellItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index)
 end
 
+local function OpenUI() 
+    EHM_MainFrame:Show()
+end
+
+-- Open UI
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.UI.key .. "1",
+    EHM.COMMANDS.UI.UI1.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.UI.key .. "2",
+    EHM.COMMANDS.UI.UI2.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.UI.key .. "3",
+    EHM.COMMANDS.UI.UI3.register
+)
+SlashCmdList[EHM.COMMANDS.UI.key] = OpenUI
+
 -- All together (slower)
-SLASH_EHM1 = EHM.COMMANDS.MAIN.M1
-SLASH_EHM2 = EHM.COMMANDS.MAIN.M2
-SLASH_EHM3 = EHM.COMMANDS.MAIN.M3
-SlashCmdList.EHM = RunEHMLoop
-
+-- EHM.RegisterSlashCommand(
+--     EHM.COMMANDS.ALL.key .. "1",
+--     EHM.COMMANDS.ALL.M1.register
+-- )
+-- EHM.RegisterSlashCommand(
+--     EHM.COMMANDS.ALL.key .. "2",
+--     EHM.COMMANDS.ALL.M2.register
+-- )
+-- EHM.RegisterSlashCommand(
+--     EHM.COMMANDS.ALL.key .. "3",
+--     EHM.COMMANDS.ALL.M3.register
+-- )
+-- SlashCmdList[EHM.COMMANDS.ALL.key] = RunEHMLoop
 -- Only Buy
-SLASH_EHM_B1 = EHM.COMMANDS.BUY.B1
-SLASH_EHM_B2 = EHM.COMMANDS.BUY.B2
-SLASH_EHM_B3 = EHM.COMMANDS.BUY.B3
-SlashCmdList.EHM_B = RunEHMBuy
-
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.BUY.key .. "1",
+    EHM.COMMANDS.BUY.B1.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.BUY.key .. "2",
+    EHM.COMMANDS.BUY.B2.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.BUY.key .. "3",
+    EHM.COMMANDS.BUY.B3.register
+)
+SlashCmdList[EHM.COMMANDS.BUY.key] = RunEHMBuy
 -- Only Equip
-SLASH_EHM_E1 = EHM.COMMANDS.EQUIP.E1
-SLASH_EHM_E2 = EHM.COMMANDS.EQUIP.E2
-SLASH_EHM_E3 = EHM.COMMANDS.EQUIP.E3
-SlashCmdList.EHM_E = RunEHMEquip
-
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.EQUIP.key .. "1",
+    EHM.COMMANDS.EQUIP.E1.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.EQUIP.key .. "2",
+    EHM.COMMANDS.EQUIP.E2.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.EQUIP.key .. "3",
+    EHM.COMMANDS.EQUIP.E3.register
+)
+SlashCmdList[EHM.COMMANDS.EQUIP.key] = RunEHMEquip
 -- Only Sell
-SLASH_EHM_S1 = EHM.COMMANDS.SELL.S1
-SLASH_EHM_S2 = EHM.COMMANDS.SELL.S2
-SLASH_EHM_S3 = EHM.COMMANDS.SELL.S3
-SlashCmdList.EHM_S = RunEHMSell
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.SELL.key .. "1",
+    EHM.COMMANDS.SELL.S1.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.SELL.key .. "2",
+    EHM.COMMANDS.SELL.S2.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.SELL.key .. "3",
+    EHM.COMMANDS.SELL.S3.register
+)
+SlashCmdList[EHM.COMMANDS.SELL.key] = RunEHMSell

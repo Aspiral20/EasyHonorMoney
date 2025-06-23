@@ -1,4 +1,4 @@
-# File last updated: 2025-06-17T23:39:00Z
+# File last updated: 2025-06-19T10:18:00Z
 
 ## Interface: 11507, 40402, 110105
 ## Title: EasyHonorMoneyDev
@@ -27,9 +27,7 @@ Data/Character.lua
 Data/Merchants.lua
 Data/Items.lua
 Data/Globals.lua
-
-# Initialization DB
-InitDB.lua
+UI/MainFrame/Body/NavViews/Data.lua
 
 # Pre-Helpers
 Debug.lua
@@ -45,6 +43,8 @@ Modules/ModuleSellItemsByItemID.lua
 
 # UI Components
 UI/Components/Button.lua
+UI/Components/ItemButtonFactory.lua
+UI/Components/ActionButtons.lua
 
 # Core
 EasyHonorMoney.lua
@@ -52,9 +52,12 @@ EasyHonorMoney.lua
 # UI
 UI/MainFrame/MainFrame.lua
 UI/MainFrame/TitleBar.lua
+UI/MainFrame/Body/Navigation/View.lua
 UI/MainFrame/Body/MainBodyFrame.lua
 UI/MainFrame/Body/SideBar.lua
 UI/MainFrame/Body/BodyContent.lua
+UI/MainFrame/Body/NavViews/Items.lua
+UI/MainFrame/Body/NavViews/Merchants.lua
 UI/MinimapButton.lua
 UI/Settings.lua
 UI/VendorPopUp.lua

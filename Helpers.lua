@@ -113,6 +113,83 @@ function EHM.Notifications(...)
     print(prefixColor .. "[EHM]" .. EHM.CHAR_COLORS.reset .. " " .. message)
 end
 
+local function IsItemAdded(itemID)
+    if not EHM_DB or not EHM_DB.USED_ITEM then return false end
+    for _, id in ipairs(EHM_DB.USED_ITEM) do
+        if id == itemID then return true end
+    end
+    return false
+end
+
+local function GetPlayerHonor()
+    local honorPoints = 0
+    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(390) -- Honor ID
+    if currencyInfo then honorPoints = currencyInfo.quantity or 0 end
+    return honorPoints
+end
+
+local function GetMerchantItemID(merchantIndex)
+    local link = GetMerchantItemLink(merchantIndex)
+    if not link then return nil end
+    local itemID = tonumber(link:match("item:(%d+):"))
+    return itemID
+end
+
+local function GetAllMapIds()
+    for _, continent in ipairs(C_Map.GetMapChildrenInfo(946, 2)) do
+        print(continent.name, continent.mapID)
+    end
+end
+-- Ex:
+-- local sortedItems = GetItemsSortedByPrice(EHM.Items, false) -- false = ascending
+-- or
+-- local sortedItemsDesc = GetItemsSortedByPrice(EHM.Items, true) -- true = descending
+
+local function GetItemsSortedByPrice(itemsTable, descending)
+    local sortDirection = descending or false
+
+    -- Step 1: Copy items into a new list
+    local sortedList = {}
+    for _, item in pairs(itemsTable) do
+        table.insert(sortedList, item)
+    end
+
+    -- Step 2: Sort the copied list
+    table.sort(sortedList, function(a, b)
+        if sortDirection then
+            return a.price > b.price
+        else
+            return a.price < b.price
+        end
+    end)
+
+    return sortedList
+end
+
+function SetUsedItem(itemID)
+    EHM_DB.USED_ITEM = EHM.Items[itemID]
+    
+    -- Update all views that depend on USED_ITEM
+    if EHM.EHM_SideBarViews and EHM.EHM_SideBarViews[EHM.SidebarNavigation.items.key] then
+        EHM.EHM_SideBarViews[EHM.SidebarNavigation.items.key]:ShowItems()
+    end
+    if EHM_HonorVendor and EHM_HonorVendor:IsShown() then
+        EHM_HonorVendor:BuildPopup()
+    end
+end
+
+local eventFrame = CreateFrame("Frame")
+eventFrame:RegisterEvent("ADDON_LOADED")
+
+-- Run scripts after addon is loaded to avoid leak of memory
+eventFrame:SetScript("OnEvent", function(self, event, addonName)
+    if addonName == "EasyHonorMoneyDev" then  -- use your actual AddOn name here
+        if EHM.EHM_SideBarViews and EHM.EHM_SideBarViews[EHM.SidebarNavigation.items.key] then
+            EHM.EHM_SideBarViews[EHM.SidebarNavigation.items.key]:ShowItems()
+        end
+        self:UnregisterEvent("ADDON_LOADED")
+    end
+end)
 
 EHM.DUMP = DumpTable
 EHM.CreateLoadingFunction = CreateLoadingFunction
@@ -120,9 +197,17 @@ EHM.GetProgressBar = GetProgressBar
 EHM.FormatGoldString = FormatGoldString
 EHM.FormatGoldWithIcons = FormatGoldWithIcons
 EHM.GetFreeBagSlots = GetFreeBagSlots
+EHM.IsItemAdded = IsItemAdded
+EHM.GetPlayerHonor = GetPlayerHonor
+EHM.GetMerchantItemID = GetMerchantItemID
+EHM.GetItemsSortedByPrice = GetItemsSortedByPrice
+EHM.SetUsedItem = SetUsedItem
 
-SLASH_EHMPRINT1 = EHM.COMMANDS.LIST
-SlashCmdList["EHMPRINT"] = function()
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.LIST.key,
+    EHM.COMMANDS.LIST.register
+)
+SlashCmdList[EHM.COMMANDS.LIST.key] = function()
     if not EHM_DB or not EHM_DB.USED_ITEM then
         EHM.Notifications(EHM.CHAR_COLORS.lightBlue, "No items in DB.")
         return

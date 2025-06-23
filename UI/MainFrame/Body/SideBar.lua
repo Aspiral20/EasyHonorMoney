@@ -15,9 +15,37 @@ EHM_SideBar:SetBackdrop({
 EHM_SideBar:SetBackdropColor(0, 0, 0, EHM.BACKGROUND_OPACITY)
 
 -- SubTitle for Sidebar
-local sbTitle = EHM_SideBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-sbTitle:SetPoint("TOP", EHM_SideBar, "TOP", 0, -12)
+local sbTitle = EHM_SideBar:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+sbTitle:SetPoint("TOP", EHM_SideBar, "TOP", 0, EHM.SidebarContent.paddingTitleTop)
 sbTitle:SetFont(EHM.TITLE_FONT, 12, "OUTLINE")
 sbTitle:SetText("Options")
+
+-- Navigation
+local paddingTop = 18
+local buttonWidth = EHM.MAIN_FRAME.BODY.SIDE_BAR.WIDTH - (2 * 12)
+local function CreateSidebarButton(label, viewKey, order)
+    local btn = CreateFrame("Button", nil, EHM_SideBar, "UIPanelButtonTemplate")
+    btn:SetSize(buttonWidth, 24)
+    btn:SetPoint("TOP", sbTitle, "BOTTOM", 0, -(order * 28) + paddingTop)
+    btn:SetText(label)
+
+    btn:SetScript("OnClick", function()
+        EHM.ShowView(viewKey)
+    end)
+
+    return btn
+end
+
+CreateSidebarButton(
+    EHM.SidebarNavigation.items.label,
+    EHM.SidebarNavigation.items.key,
+    EHM.SidebarNavigation.items.order
+)
+CreateSidebarButton(
+    EHM.SidebarNavigation.merchants.label,
+    EHM.SidebarNavigation.merchants.key,
+    EHM.SidebarNavigation.merchants.order
+)
+
 
 EHM.UI.MAIN_FRAME.BODY.EHM_SideBar = EHM_SideBar
