@@ -25,10 +25,10 @@ function EHM_ItemsView:ShowItems()
     for _, btn in ipairs(buttons) do
         btn:Hide()
         btn:SetScript("OnClick", nil)
-        if btn.border then
-            btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- reset to transparent here
-            btn.border:Hide()
-        end
+        -- if btn.border then
+        --     btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- reset to transparent here
+        --     btn.border:Hide()
+        -- end
         if btn.honorIcon then btn.honorIcon:Hide() end
         if btn.infoIcon then btn.infoIcon:Hide() end
     end
@@ -62,25 +62,25 @@ function EHM_ItemsView:ShowItems()
 
             btn:GetNormalTexture()
 
-            if not btn.border then
-                btn.border = CreateFrame("Frame", nil, btn, BackdropTemplateMixin and "BackdropTemplate" or nil)
-                btn.border:SetPoint("TOPLEFT", btn, "TOPLEFT", -2, 2)
-                btn.border:SetPoint("BOTTOMRIGHT", btn, "BOTTOMRIGHT", 2, -2)
-                btn.border:SetBackdrop({
-                    edgeFile = "Interface\\Buttons\\WHITE8X8",
-                    edgeSize = 2,
-                })
-                btn.border:SetBackdropColor(0, 0, 0, 0)
-            end
+            -- if not btn.border then
+            --     btn.border = CreateFrame("Frame", nil, btn, BackdropTemplateMixin and "BackdropTemplate" or nil)
+            --     btn.border:SetPoint("TOPLEFT", btn, "TOPLEFT", -2, 2)
+            --     btn.border:SetPoint("BOTTOMRIGHT", btn, "BOTTOMRIGHT", 2, -2)
+            --     btn.border:SetBackdrop({
+            --         edgeFile = "Interface\\Buttons\\WHITE8X8",
+            --         edgeSize = 2,
+            --     })
+            --     btn.border:SetBackdropColor(0, 0, 0, 0)
+            -- end
             
-            btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Clear first (always)
-            if EHM_DB and EHM_DB.USED_ITEM and tonumber(EHM_DB.USED_ITEM.index) == tonumber(itemID) then
-                btn.border:SetBackdropBorderColor(0, 1, 0, 1) -- Green border
-            else
-                btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Transparent border
-            end
+            -- btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Clear first (always)
+            -- if EHM_DB and EHM_DB.USED_ITEM and tonumber(EHM_DB.USED_ITEM.index) == tonumber(itemID) then
+            --     btn.border:SetBackdropBorderColor(0, 1, 0, 1) -- Green border
+            -- else
+            --     btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Transparent border
+            -- end
 
-            btn.border:Show()
+            -- btn.border:Show()
 
             btn:SetScript("OnClick", function()
                 if EHM.IsItemAdded(itemID) then
