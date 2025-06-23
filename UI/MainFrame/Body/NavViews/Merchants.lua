@@ -12,8 +12,8 @@ merchantsText:SetJustifyV("MIDDLE")
 merchantsText:SetFont(EHM.TITLE_FONT, 12, "OUTLINE")
 merchantsText:SetText(EHM.SidebarNavigation.merchants.title)
 
-buttons = {}
 function EHM_MerchantsView:ShowMerchants()
+    buttons = {}
     for _, btn in ipairs(buttons) do
         btn:Hide()
     end
@@ -32,13 +32,7 @@ function EHM_MerchantsView:ShowMerchants()
     local totalGold, totalSilver, totalCopper = 0, 0, 0
     local itemsBought, totalSellValue = 0, 0
 
-    print("Loaded merchants:")
-    for k, v in pairs(EHM.Merchants) do
-        print(k, v.name)
-    end
-
     for merchantID, merchantData in pairs(EHM.Merchants) do
-        print(merchantID, merchantData)
         if merchantData then
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..merchantID, EHM_MerchantsView, "SecureActionButtonTemplate")
             btn:SetSize(btnSize, btnSize)
@@ -72,12 +66,11 @@ function EHM_MerchantsView:ShowMerchants()
                     EHM.debugPrint("Failed to get current map ID.")
                     return
                 end
-                -- print(merchantData.x, merchantData.x)
 
                 if btn.currentWaypoint then
                     TomTom:RemoveWaypoint(btn.currentWaypoint)
                     btn.currentWaypoint = nil
-                    print("Waypoint removed for:", merchantData.name)
+                    EHM.Notifications(EHM.CHAR_COLORS.red, "Waypoint removed for:", merchantData.name)
                 else
                     -- Remove all existing waypoints (Cataclysm Classic-compatible)
                     if TomTom.waypoints then
@@ -151,9 +144,9 @@ function EHM_MerchantsView:ShowMerchants()
     end
 end
 
-C_Timer.After(0, function()
-    -- safe to run after full load
-    EHM_MerchantsView:ShowMerchants()
-end)
+-- C_Timer.After(0, function()
+--     -- safe to run after full load
+--     EHM_MerchantsView:ShowMerchants()
+-- end)
 
 EHM.EHM_SideBarViews[EHM.SidebarNavigation.merchants.key] = EHM_MerchantsView

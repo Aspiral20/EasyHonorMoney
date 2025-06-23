@@ -90,8 +90,8 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
     end
 
     -- Debug:
-    -- print(equipSlot, equipSlotName, originalItemLink, originalItemID)
-
+    -- EHM.debugPrint(equipSlot, equipSlotName, originalItemLink, originalItemID)
+    
     -- Find all matching items in bags
     for bag = 0, 4 do
         for slot = 1, C.GetContainerNumSlots(bag) do

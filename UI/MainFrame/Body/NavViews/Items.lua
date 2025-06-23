@@ -27,10 +27,10 @@ function EHM_ItemsView:ShowItems()
         btn:SetScript("OnClick", nil)
         if btn.border then
             btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- reset to transparent here
+            btn.border:Hide()
         end
-        if btn.honorIcon then
-            btn.honorIcon:Hide()
-        end
+        if btn.honorIcon then btn.honorIcon:Hide() end
+        if btn.infoIcon then btn.infoIcon:Hide() end
     end
     table.wipe(buttons)
     local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
@@ -73,6 +73,7 @@ function EHM_ItemsView:ShowItems()
                 btn.border:SetBackdropColor(0, 0, 0, 0)
             end
             
+            btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Clear first (always)
             if EHM_DB and EHM_DB.USED_ITEM and tonumber(EHM_DB.USED_ITEM.index) == tonumber(itemID) then
                 btn.border:SetBackdropBorderColor(0, 1, 0, 1) -- Green border
             else
@@ -164,10 +165,10 @@ function EHM_ItemsView:ShowItems()
     end
 end
 
-C_Timer.After(1, function()
-    -- safe to run after full load
-    EHM_ItemsView:ShowItems()
-end)
+-- C_Timer.After(1, function()
+--     -- safe to run after full load
+--     EHM_ItemsView:ShowItems()
+-- end)
 
 -- Create a frame for events
 -- local updateFrame = CreateFrame("Frame")
@@ -201,8 +202,5 @@ end)
 --         self:UnregisterEvent("ADDON_LOADED")
 --     end
 -- end)
-
-
-
 
 EHM.EHM_SideBarViews[EHM.SidebarNavigation.items.key] = EHM_ItemsView
