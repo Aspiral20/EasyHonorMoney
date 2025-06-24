@@ -75,9 +75,10 @@ function EHM_ItemsView:ShowItems()
             
             -- btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Clear first (always)
             -- if EHM_DB and EHM_DB.USED_ITEM and tonumber(EHM_DB.USED_ITEM.index) == tonumber(itemID) then
-            --     btn.border:SetBackdropBorderColor(0, 1, 0, 1) -- Green border
+                -- EHM.Notifications("Current Item: \"" .. itemData.name .. "\"")
+                -- btn.border:SetBackdropBorderColor(0, 1, 0, 1) -- Green border
             -- else
-            --     btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Transparent border
+                -- btn.border:SetBackdropBorderColor(0, 0, 0, 0) -- Transparent border
             -- end
 
             -- btn.border:Show()
@@ -85,6 +86,9 @@ function EHM_ItemsView:ShowItems()
             btn:SetScript("OnClick", function()
                 if EHM.IsItemAdded(itemID) then
                     return
+                end
+                if EHM_DB and EHM_DB.USED_ITEM and tonumber(EHM_DB.USED_ITEM.index) ~= tonumber(itemID) then
+                    EHM.Notifications("Current Item: \"" .. itemData.name .. "\". " .. "ID: " .. itemData.index)
                 end
                 EHM.SetUsedItem(itemID)
             end)

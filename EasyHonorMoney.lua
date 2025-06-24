@@ -96,19 +96,19 @@ EHM.RegisterSlashCommand(
 SlashCmdList[EHM.COMMANDS.UI.key] = OpenUI
 
 -- All together (slower)
--- EHM.RegisterSlashCommand(
---     EHM.COMMANDS.ALL.key .. "1",
---     EHM.COMMANDS.ALL.M1.register
--- )
--- EHM.RegisterSlashCommand(
---     EHM.COMMANDS.ALL.key .. "2",
---     EHM.COMMANDS.ALL.M2.register
--- )
--- EHM.RegisterSlashCommand(
---     EHM.COMMANDS.ALL.key .. "3",
---     EHM.COMMANDS.ALL.M3.register
--- )
--- SlashCmdList[EHM.COMMANDS.ALL.key] = RunEHMLoop
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.ALL.key .. "1",
+    EHM.COMMANDS.ALL.M1.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.ALL.key .. "2",
+    EHM.COMMANDS.ALL.M2.register
+)
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.ALL.key .. "3",
+    EHM.COMMANDS.ALL.M3.register
+)
+SlashCmdList[EHM.COMMANDS.ALL.key] = RunEHMLoop
 -- Only Buy
 EHM.RegisterSlashCommand(
     EHM.COMMANDS.BUY.key .. "1",

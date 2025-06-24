@@ -17,8 +17,6 @@ local function ShowView(viewName)
     for name, frame in pairs(EHM.EHM_SideBarViews) do
         frame:SetShown(name == viewName)
 
-        print(name, frame)
-
         if name == viewName then
             if viewName == EHM.SidebarNavigation.items.key and frame.ShowItems then
                 frame:ShowItems()
