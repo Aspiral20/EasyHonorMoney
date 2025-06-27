@@ -1,4 +1,3 @@
-
 -- 🧪 Additional Suggestions:
 -- Make sure the vendor window remains open during the process.
 -- You can test selling with /run UseContainerItem(bag, slot) to see it work live.
@@ -29,7 +28,7 @@ local function RunEHMLoop()
 
     if honor < EHM.CURRENT_MINIMAL_CURRENCY then
         local hasItemInBag = false
-            
+
         for bag = 0, 4 do
             for slot = 1, C_Container.GetContainerNumSlots(bag) do
                 local link = C_Container.GetContainerItemLink(bag, slot)
@@ -94,7 +93,6 @@ EHM.RegisterSlashCommand(
     EHM.COMMANDS.UI.UI3.register
 )
 SlashCmdList[EHM.COMMANDS.UI.key] = OpenUI
-
 -- All together (slower)
 EHM.RegisterSlashCommand(
     EHM.COMMANDS.ALL.key .. "1",

@@ -15,3 +15,7 @@ EHM.MAIN_FRAME = {
         }
     }
 }
+EHM.AVAILABLE_ADDONS = {
+    EasyHonorMoney = true,
+    EasyHonorMoneyDev = true,
+}

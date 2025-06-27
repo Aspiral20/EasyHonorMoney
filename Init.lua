@@ -14,7 +14,7 @@ EHM.DEBUG_MODE = false  -- Set to false to disable debug prints
 local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(_, event, addonName)
-    if event == "ADDON_LOADED" and (addonName == "EasyHonorMoney" or addonName == "EasyHonorMoneyDev") then
+    if event == "ADDON_LOADED" and EHM.AVAILABLE_ADDONS[addonName] then
         -- Ensure DB table exists
         if not EHM_DB then
             EHM_DB = {}
