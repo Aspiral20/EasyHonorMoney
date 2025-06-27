@@ -24,14 +24,10 @@ sbTitle:SetText("Options")
 local paddingTop = 18
 local buttonWidth = EHM.MAIN_FRAME.BODY.SIDE_BAR.WIDTH - (2 * 12)
 local function CreateSidebarButton(label, viewKey, order)
-    local btn = CreateFrame("Button", nil, EHM_SideBar, "UIPanelButtonTemplate")
-    btn:SetSize(buttonWidth, 24)
-    btn:SetPoint("TOP", sbTitle, "BOTTOM", 0, -(order * 28) + paddingTop)
-    btn:SetText(label)
-
-    btn:SetScript("OnClick", function()
+    local btn = EHM.AddonButton(EHM_SideBar, label, buttonWidth, 24, function()
         EHM.ShowView(viewKey)
     end)
+    btn:SetPoint("TOP", sbTitle, "BOTTOM", 0, -(order * 28) + paddingTop)
 
     return btn
 end
@@ -46,6 +42,5 @@ CreateSidebarButton(
     EHM.SidebarNavigation.merchants.key,
     EHM.SidebarNavigation.merchants.order
 )
-
 
 EHM.UI.MAIN_FRAME.BODY.EHM_SideBar = EHM_SideBar

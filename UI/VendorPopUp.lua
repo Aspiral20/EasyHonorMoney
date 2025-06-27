@@ -28,7 +28,7 @@ EHM_HonorVendor.content:SetAllPoints()
 
 -- Title fontstring
 local titleText = "Honor Items Available"
-local title = EHM_HonorVendor:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+local title = EHM_HonorVendor:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 title:SetPoint("TOP", 0, -14)
 title:SetText(titleText)
 
@@ -225,7 +225,7 @@ function EHM_HonorVendor:BuildPopup()
     if not foundAny then
         title:SetText("No Honor Items for sale")
     else
-        title:SetText("Honor Items Available")
+        title:SetText(titleText)
     end
 
     return foundAny
@@ -291,7 +291,7 @@ EHM.CreateActionButtons(
             local freeBagSlots = EHM.GetFreeBagSlots()
             local buyButton = EHM_HonorVendor.actionButtons[1] -- Buy button is first
             if buyButton then
-                buyButton:SetText("Buy (" .. freeBagSlots .. ")")
+                buyButton.text:SetText("Buy (" .. freeBagSlots .. ")")
             end
         end
 
@@ -303,24 +303,3 @@ EHM.CreateActionButtons(
         UpdateBuyButton()
     end
 )
-
--- Update vendor popup on BAG_UPDATE or currency change
--- local honorUpdateFrame = CreateFrame("Frame")
--- honorUpdateFrame:RegisterEvent("BAG_UPDATE")
--- honorUpdateFrame:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
-
--- honorUpdateFrame:SetScript("OnEvent", function()
---     if EHM_HonorVendor and EHM_HonorVendor:IsShown() then
---         EHM_HonorVendor:BuildPopup()
---     end
--- end)
-
-
--- local freeBagSlots = EHM.GetFreeBagSlots()
--- local equipBtn = CreateFrame("Button", nil, EHM_HonorVendor, "UIPanelButtonTemplate")
--- closeBtn:SetHeight(buttonsSize)
--- closeBtn:SetText("Buy(" .. freeBagSlots .. ")")
--- closeBtn:SetPoint("TOPLEFT", EHM_HonorVendor, "TOPLEFT", -8, -8)
--- closeBtn:SetScript("OnClick", function()
-    
--- end)

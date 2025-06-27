@@ -1,55 +1,70 @@
--- function EHM:CreateButton(name, parent, width, height, text, onClick, opts)
---     local button = CreateFrame("Button", name, parent, "UIPanelButtonTemplate")
---     button:SetSize(width or 120, height or 30)
---     button:SetText(text or "Click")
+function EHM.AddonButton(parent, text, width, height, onClickFunc)
+    local borderIns = 1
+    -- Base colors
+    local borderColor   = {0.1, 0.1, 0.1, 1}
+    local normalColor   = {0, 0, 0, EHM.BTN_BACKGROUND_OPACITY}
+    local hoverColor    = {0.3, 0.3, 0.3, 0.7}
+    local pressedColor  = {0.2, 0.2, 0.2, 0.7}
 
---     if onClick then
---         button:SetScript("OnClick", onClick)
---     end
+    local btn = CreateFrame("Button", nil, parent, "BackdropTemplate")
+    btn:SetSize(width or 80, height or 24)
 
---     button.isLoading = false
+    btn.text = btn:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    btn.text:SetPoint("CENTER", btn, "CENTER")
+    btn.text:SetText(text or "Button")
+    btn.text:SetTextColor(1, 0.82, 0)
 
---     button:SetScript("OnClick", function(self)
---         if self.isLoading then return end
---         self.isLoading = true
+    -- Background color (optional)
+    btn:SetBackdrop({
+        -- bgFile = EHM.BACKGROUND_POPUP,
+        bgFile = "Interface\\Buttons\\WHITE8X8",
+        edgeFile = "Interface\\Buttons\\WHITE8X8",
+        edgeSize = 1,
+        insets = { left = borderIns, right = borderIns, top = borderIns, bottom = borderIns }
+    })
 
---         local success, err = pcall(onClick, self)
+    btn:SetBackdropColor(unpack(normalColor))
+    btn:SetBackdropBorderColor(unpack(borderColor)) -- Subtle border
 
---         if not success then
---             EHM.Notifications(EHM.CHAR_COLORS.red, "Error:", err)
---         end
+    btn.isPressed = false
 
---         self.isLoading = false
---     end)
+    -- Mouse enter = highlight
+    btn:SetScript("OnEnter", function(self)
+        if self.isPressed then
+            self:SetBackdropColor(unpack(pressedColor))
+        else
+            self:SetBackdropColor(unpack(hoverColor))
+        end
+    end)
 
+    -- Mouse leave = reset (but also cancel "pressed" if holding mouse)
+    btn:SetScript("OnLeave", function(self)
+        if not self.isPressed then
+            self:SetBackdropColor(unpack(normalColor))
+        end
+        -- else: don't change the color, keep it pressed
+    end)
 
+    -- Mouse down = pressed effect
+    btn:SetScript("OnMouseDown", function(self)
+        self.isPressed = true
+        self:SetBackdropColor(unpack(pressedColor))
+    end)
 
---     -- Optional: tooltip
---     button.tooltip = opts and opts.tooltip or ""
---     button:SetScript("OnEnter", function(self)
---         if self.tooltip ~= "" then
---             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
---             GameTooltip:SetText(self.tooltip, 1, 1, 1)
---             GameTooltip:Show()
---         end
---     end)
---     button:SetScript("OnLeave", GameTooltip_Hide)
+    -- Mouse up = return to hover if mouse is still over, or normal
+    btn:SetScript("OnMouseUp", function(self)
+        self.isPressed = false
+        if self:IsMouseOver() then
+            self:SetBackdropColor(unpack(hoverColor))
+        else
+            self:SetBackdropColor(unpack(normalColor))
+        end
+    end)
 
---     -- Optional: font color
---     if opts and opts.textColor then
---         local r, g, b = unpack(opts.textColor)
---         button:GetFontString():SetTextColor(r, g, b)
---     end
+    -- Click handler
+    if onClickFunc then
+        btn:SetScript("OnClick", onClickFunc)
+    end
 
---     -- Optional: background color
---     if opts and opts.bgColor then
---         local r, g, b = unpack(opts.bgColor)
---         button:SetNormalTexture(nil) -- remove default texture
---         local tex = button:CreateTexture(nil, "BACKGROUND")
---         tex:SetAllPoints()
---         tex:SetColorTexture(r, g, b, 1)
---         button.tex = tex
---     end
-
---     return button
--- end
+    return btn
+end

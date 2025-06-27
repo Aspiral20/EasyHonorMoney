@@ -15,7 +15,7 @@ EHM_ItemsTitle:SetText(EHM.SidebarNavigation.items.title)
 EHM.CreateActionButtons(
     EHM_ItemsView,
     nil,
-    14,
+    21,
     -36
 )
 -- print(EHM_DB.USED_ITEM and EHM.DUMP(EHM_DB.USED_ITEM))
