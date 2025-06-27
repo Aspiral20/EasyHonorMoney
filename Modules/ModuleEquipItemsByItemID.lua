@@ -84,7 +84,7 @@ local function EquipItemsByItemID(itemID, equipSlotName, callback)
 
     -- Accept equipSlotName like "INVTYPE_CLOAK" and convert it to numeric slot
     if not equipSlot then
-        EHM.Notifications(EHM.CHAR_COLORS.red, "Invalid equip slot:", equipSlotName)
+        EHM.NotificationsError("Invalid equip slot:", equipSlotName)
         if callback then callback(false) end
         return
     end
@@ -199,7 +199,7 @@ local function EquipItemsByItemID_SeparateCall(itemID)
     end
 
     if #itemsToEquip == 0 then
-        EHM.Notifications(EHM.CHAR_COLORS.red, "No items found with itemID:", itemID)
+        EHM.NotificationsError("No items found with itemID:", itemID)
         return
     end
 
@@ -234,9 +234,9 @@ local function EquipItemsByItemID_SeparateCall(itemID)
                         end
                     end
                 end
-                EHM.Notifications(EHM.CHAR_COLORS.red, "Original item not found in bags.")
+                EHM.NotificationsError("Original item not found in bags.")
             else
-                EHM.Notifications(EHM.CHAR_COLORS.yellow, "Original item already equipped.")
+                EHM.NotificationsWarning("Original item already equipped.")
             end
         end)
     end

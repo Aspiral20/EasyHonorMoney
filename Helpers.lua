@@ -69,10 +69,24 @@ end
 
 local function FormatGoldWithIcons(g, s, c)
     local out = ""
-    if g > 0 then out = out .. g .. "|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t " end
-    if s > 0 or (g > 0 and c > 0) then out = out .. s .. "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t " end
-    if c > 0 or (g == 0 and s == 0) then out = out .. c .. "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t" end
+    if g > 0 then out = out .. g .. EHM.MONEY_ICONS.gold end
+    if s > 0 or (g > 0 and c > 0) then out = out .. s .. EHM.MONEY_ICONS.silver end
+    if c > 0 or (g == 0 and s == 0) then out = out .. c .. EHM.MONEY_ICONS.copper end
     return out
+end
+
+function GetHonorIcon()
+    local faction = UnitFactionGroup("player")
+    local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
+    return { honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t", honorIconPath = honorIconPath}
+end
+
+function CreateHonorIcon(frame, width, height)
+    local honorIconPath = GetHonorIcon().honorIconPath
+    local honorIconFrame = frame:CreateTexture(nil, "OVERLAY")
+    honorIconFrame:SetSize(width or 14, height or 14)
+    honorIconFrame:SetTexture(honorIconPath)
+    return honorIconFrame
 end
 
 local function GetFreeBagSlots()
@@ -111,6 +125,14 @@ function EHM.Notifications(...)
     end
 
     print(prefixColor .. "[EHM]" .. EHM.CHAR_COLORS.reset .. " " .. message)
+end
+
+function EHM.NotificationsWarning(...)
+    EHM.Notifications(EHM.CHAR_COLORS.yellow, ...)
+end
+
+function EHM.NotificationsError(...)
+    EHM.Notifications(EHM.CHAR_COLORS.red, ...)
 end
 
 local function IsItemAdded(itemID)
@@ -196,6 +218,8 @@ EHM.CreateLoadingFunction = CreateLoadingFunction
 EHM.GetProgressBar = GetProgressBar
 EHM.FormatGoldString = FormatGoldString
 EHM.FormatGoldWithIcons = FormatGoldWithIcons
+EHM.GetHonorIcon = GetHonorIcon
+EHM.CreateHonorIcon = CreateHonorIcon
 EHM.GetFreeBagSlots = GetFreeBagSlots
 EHM.IsItemAdded = IsItemAdded
 EHM.GetPlayerHonor = GetPlayerHonor

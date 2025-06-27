@@ -20,3 +20,8 @@ EHM.AVAILABLE_ADDONS = {
     EasyHonorMoney = true,
     EasyHonorMoneyDev = true,
 }
+EHM.MONEY_ICONS = {
+    gold = "|TInterface\\MoneyFrame\\UI-GoldIcon:0:0:2:0|t",
+    silver = "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t",
+    copper = "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t",
+}

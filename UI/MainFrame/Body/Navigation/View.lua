@@ -11,6 +11,12 @@ EHM.SidebarNavigation = {
         order = 2,
         title = "Available Vendors",
     },
+    item_check = {
+        key = "item_check",
+        label = "Check Item",
+        order = 3,
+        title = "Check Item",
+    },
 }
 
 local function ShowView(viewName)

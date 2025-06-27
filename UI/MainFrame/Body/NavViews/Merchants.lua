@@ -56,7 +56,7 @@ function EHM_MerchantsView:ShowMerchants()
 
             btn:SetScript("OnClick", function()
                 if not TomTom or not merchantData.mapID or not merchantData.x or not merchantData.y then
-                    EHM.Notifications(EHM.CHAR_COLORS.yellow, "TomTom not found or merchant missing coordinates. Install TomTom to see waypoints")
+                    EHM.NotificationsWarning("TomTom not found or merchant missing coordinates. Install TomTom to see waypoints")
                     return
                 end
 
@@ -70,7 +70,7 @@ function EHM_MerchantsView:ShowMerchants()
                 if btn.currentWaypoint then
                     TomTom:RemoveWaypoint(btn.currentWaypoint)
                     btn.currentWaypoint = nil
-                    EHM.Notifications(EHM.CHAR_COLORS.red, "Waypoint removed for:", merchantData.name)
+                    EHM.NotificationsError("Waypoint removed for:", merchantData.name)
                 else
                     -- Remove all existing waypoints (Cataclysm Classic-compatible)
                     if TomTom.waypoints then

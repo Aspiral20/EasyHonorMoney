@@ -109,7 +109,7 @@ local function SellItemsByItemID_SeparateCall(itemID)
             local goldString = EHM.FormatGoldWithIcons(g, s, c)
 
             if isSellingCancelled and #itemsToSell > 0 then
-                EHM.Notifications(EHM.CHAR_COLORS.yellow, string.format(" Selling cancelled early — sold %d/%d × itemID %d, earned %s", soldCount, totalItems, itemID, goldString))
+                EHM.NotificationsWarning(string.format(" Selling cancelled early — sold %d/%d × itemID %d, earned %s", soldCount, totalItems, itemID, goldString))
             else
                 EHM.Notifications(string.format("Sold %d × itemID %d, earned %s", soldCount, itemID, goldString))
             end

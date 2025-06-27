@@ -27,7 +27,7 @@ local function CreateSidebarButton(label, viewKey, order)
     local btn = EHM.AddonButton(EHM_SideBar, label, buttonWidth, 24, function()
         EHM.ShowView(viewKey)
     end)
-    btn:SetPoint("TOP", sbTitle, "BOTTOM", 0, -(order * 28) + paddingTop)
+    btn:SetPoint("TOP", sbTitle, "BOTTOM", 0, -(order * 30) + paddingTop)
 
     return btn
 end
@@ -41,6 +41,11 @@ CreateSidebarButton(
     EHM.SidebarNavigation.merchants.label,
     EHM.SidebarNavigation.merchants.key,
     EHM.SidebarNavigation.merchants.order
+)
+CreateSidebarButton(
+    EHM.SidebarNavigation.item_check.label,
+    EHM.SidebarNavigation.item_check.key,
+    EHM.SidebarNavigation.item_check.order
 )
 
 EHM.UI.MAIN_FRAME.BODY.EHM_SideBar = EHM_SideBar

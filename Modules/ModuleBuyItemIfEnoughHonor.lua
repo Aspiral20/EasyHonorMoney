@@ -45,7 +45,7 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
 
     local function BuyBatch()
         if isCancelled then
-            EHM.Notifications(EHM.CHAR_COLORS.yellow, "Purchase cancelled (merchant closed).")
+            EHM.NotificationsWarning("Purchase cancelled (merchant closed).")
             if callback then callback(false) end
             return
         end
@@ -53,7 +53,7 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
 
         local function BuyNextInBatch(i)
             if isCancelled then
-                EHM.Notifications(EHM.CHAR_COLORS.yellow, "Purchase cancelled during batch.")
+                EHM.NotificationsWarning("Purchase cancelled during batch.")
                 if callback then callback(false) end
                 return
             end

@@ -58,6 +58,7 @@ UI/MainFrame/Body/SideBar.lua
 UI/MainFrame/Body/BodyContent.lua
 UI/MainFrame/Body/NavViews/Items.lua
 UI/MainFrame/Body/NavViews/Merchants.lua
+UI/MainFrame/Body/NavViews/ItemCheck.lua
 UI/MinimapButton.lua
 UI/Settings.lua
 UI/VendorPopUp.lua

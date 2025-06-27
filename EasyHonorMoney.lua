@@ -2,7 +2,6 @@
 -- Make sure the vendor window remains open during the process.
 -- You can test selling with /run UseContainerItem(bag, slot) to see it work live.
 -- You could also log how many were sold or track honor gained per loop if needed.
-
 local function RunEHMLoop()
     local honor = GetCurrencyInfo(EHM.HONOR_INDEX).quantity
     local freeBagSlots = EHM.GetFreeBagSlots()
@@ -17,11 +16,11 @@ local function RunEHMLoop()
                         -- print("Looping again...")
                         -- C_Timer.After(1, RunEHMLoop)
                     else
-                        EHM.Notifications(EHM.CHAR_COLORS.red, "Sell step failed")
+                        EHM.NotificationsError("Sell step failed")
                     end
                 end)
             else
-                EHM.Notifications(EHM.CHAR_COLORS.red, "Equip step failed")
+                EHM.NotificationsError("Equip step failed")
             end
         end)
     end
@@ -44,10 +43,10 @@ local function RunEHMLoop()
         end
 
         if not hasItemInBag then
-            EHM.Notifications(EHM.CHAR_COLORS.red, "Stopping: Not enough honor and no items left in bag.")
+            EHM.NotificationsError("Stopping: Not enough honor and no items left in bag.")
             return
         else
-            EHM.Notifications(EHM.CHAR_COLORS.red, "Honor too low, but still items in bag → processing them...")
+            EHM.NotificationsError("Honor too low, but still items in bag → processing them...")
             continueLoop()
             return
         end
@@ -57,7 +56,7 @@ local function RunEHMLoop()
         if success then
             continueLoop()
         else
-            EHM.Notifications(EHM.CHAR_COLORS.red, "Buying failed.")
+            EHM.NotificationsError("Buying failed.")
         end
     end)
 end

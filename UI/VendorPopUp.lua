@@ -36,9 +36,6 @@ local buttons = {}
 
 local minimized = false -- track minimize state
 
-local faction = UnitFactionGroup("player")
-local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
-
 -- Buttons options
 local buttonsSize = 20
 local buttonsY = -8
@@ -73,8 +70,6 @@ closeBtn:SetPoint("TOPRIGHT", EHM_HonorVendor, "TOPRIGHT", buttonsY, buttonsY)
 closeBtn:SetScript("OnClick", function()
     EHM_HonorVendor:Hide()
 end)
-
-honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t"
 
 function EHM_HonorVendor:BuildPopup()
     -- Clear old buttons after changing "EHM_DB.USED_ITEM"
@@ -155,10 +150,8 @@ function EHM_HonorVendor:BuildPopup()
             btn.priceText:SetTextColor(canAfford and 1 or 0, canAfford and 1 or 0, canAfford and 1 or 0)
 
             if not btn.honorIcon then
-                btn.honorIcon = btn:CreateTexture(nil, "OVERLAY")
-                btn.honorIcon:SetSize(14, 14)
+                btn.honorIcon = EHM.CreateHonorIcon(btn, 14, 14)
                 btn.honorIcon:SetPoint("LEFT", btn.priceText, "RIGHT", 2, 0)
-                btn.honorIcon:SetTexture(honorIconPath)
             end
             btn.honorIcon:SetShown(true)
 
@@ -188,9 +181,8 @@ function EHM_HonorVendor:BuildPopup()
                     local s = math.floor((totalCopper % 10000) / 100)
                     local c = totalCopper % 100
 
-                    local honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t"
                     GameTooltip:AddLine(itemData.name, 1, 1, 1)
-                    GameTooltip:AddLine(string.format("x%d = %s / 4k%s", count, EHM.FormatGoldWithIcons(g, s, c), honorIcon), 1, 0.82, 0)
+                    GameTooltip:AddLine(string.format("x%d = %s / 4k%s", count, EHM.FormatGoldWithIcons(g, s, c), EHM.GetHonorIcon().honorIcon), 1, 0.82, 0)
                     GameTooltip:AddLine(string.format("Vendor: %s", itemData.merchant.name), 1, 1, 1)
                     
                     local fontString = _G["GameTooltipTextLeft1"]
