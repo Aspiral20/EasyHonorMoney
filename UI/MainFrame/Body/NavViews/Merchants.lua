@@ -34,12 +34,18 @@ function EHM_MerchantsView:ShowMerchants()
 
     for merchantID, merchantData in pairs(EHM.Merchants) do
         if merchantData then
+
+            local race = merchantData.race or EHM.RACE_ICONS["Human"]
+            local raceIconPath = EHM.RACE_ICONS[race.name].iconPath
+            -- EHM.Notifications("Merchant race: " .. race.name .. "\nIconPath: " .. raceIconPath)
+
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..merchantID, EHM_MerchantsView, "SecureActionButtonTemplate")
             btn:SetSize(btnSize, btnSize)
             btn:SetPoint("TOPLEFT", EHM_MerchantsView, "TOPLEFT", currentX, currentY)
-            btn:SetNormalTexture(GetItemIcon(merchantID))
+            -- btn:SetNormalTexture(GetItemIcon(merchantID))
+            btn:SetNormalTexture(raceIconPath)
             btn:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-            btn:GetNormalTexture()
+            btn:Show()
 
             if not btn.border then
                 btn.border = CreateFrame("Frame", nil, btn, BackdropTemplateMixin and "BackdropTemplate" or nil)
