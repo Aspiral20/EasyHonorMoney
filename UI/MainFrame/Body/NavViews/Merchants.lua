@@ -12,6 +12,33 @@ merchantsText:SetJustifyV("MIDDLE")
 merchantsText:SetFont(EHM.TITLE_FONT, 12, "OUTLINE")
 merchantsText:SetText(EHM.SidebarNavigation.merchants.title)
 
+local function ButtonOnEnterIcon(self, merchantData, mapInfo, mapTexture)
+    GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    GameTooltip:ClearLines()
+
+    if merchantData.name and merchantData.title then
+        GameTooltip:AddLine(merchantData.name, 1, 1, 1)
+        GameTooltip:AddLine(merchantData.title, 1, 1, 1)
+        GameTooltip:AddLine("Location: " .. mapInfo.name, 1, 1, 1)
+        GameTooltip:AddLine("Zone: " .. mapTexture.zone, 1, 1, 1)
+                    
+        local fontString = _G["GameTooltipTextLeft1"]
+        if fontString then
+            fontString:SetFont("Fonts\\FRIZQT__.TTF", 15, "OUTLINE") -- default size is ~12
+        end
+    else
+        GameTooltip:AddLine("No sell value info available", 1, 0, 0)
+    end
+                
+    GameTooltip:Show()
+end
+
+
+local function ButtonOnLeaveIcon()
+    GameTooltip:Hide()
+end
+
+
 function EHM_MerchantsView:ShowMerchants()
     buttons = {}
     for _, btn in ipairs(buttons) do
@@ -34,7 +61,8 @@ function EHM_MerchantsView:ShowMerchants()
 
     for merchantID, merchantData in pairs(EHM.Merchants) do
         if merchantData then
-
+            local mapInfo = C_Map.GetMapInfo(merchantData.mapID)
+            local mapTexture = EHM.MAP_ICONS[merchantData.mapID]
             local race = merchantData.race or EHM.RACE_ICONS["Human"]
             local raceIconPath = EHM.RACE_ICONS[race.name].iconPath
             -- EHM.Notifications("Merchant race: " .. race.name .. "\nIconPath: " .. raceIconPath)
@@ -46,6 +74,26 @@ function EHM_MerchantsView:ShowMerchants()
             btn:SetNormalTexture(raceIconPath)
             btn:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
             btn:Show()
+
+            if mapTexture then
+                local iconSize = 16
+                if not btn.mapIcon then
+                    btn.mapIcon = btn:CreateTexture(nil, "OVERLAY")
+                    btn.mapIcon:SetSize(iconSize, iconSize)
+                    btn.mapIcon:SetPoint("TOPRIGHT", btn, "TOPRIGHT", (iconSize / 4), (iconSize / 4))
+                    btn.mapIcon:SetTexture(mapTexture.path)
+                    
+                    local mask = btn:CreateMaskTexture()
+                    mask:SetTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask") -- built-in circular mask
+                    mask:SetSize(iconSize, iconSize)
+                    mask:SetPoint("TOPRIGHT", btn.mapIcon)
+                    btn.mapIcon:AddMaskTexture(mask)
+                end
+                btn.mapIcon:Show()
+                if btn.mapIconBorder then
+                    btn.mapIconBorder:Show()
+                end
+            end
 
             if not btn.border then
                 btn.border = CreateFrame("Frame", nil, btn, BackdropTemplateMixin and "BackdropTemplate" or nil)
@@ -112,26 +160,11 @@ function EHM_MerchantsView:ShowMerchants()
             btn.infoIcon:SetShown(true)
 
             btn:SetScript("OnEnter", function(self)
-                GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-                GameTooltip:ClearLines()
-
-                if merchantData.name and merchantData.title then
-                    GameTooltip:AddLine(merchantData.name, 1, 1, 1)
-                    GameTooltip:AddLine(merchantData.title, 1, 1, 1)
-                    
-                    local fontString = _G["GameTooltipTextLeft1"]
-                    if fontString then
-                        fontString:SetFont("Fonts\\FRIZQT__.TTF", 15, "OUTLINE") -- default size is ~12
-                    end
-                else
-                    GameTooltip:AddLine("No sell value info available", 1, 0, 0)
-                end
-                
-                GameTooltip:Show()
+                ButtonOnEnterIcon(self, merchantData, mapInfo, mapTexture)
             end)
 
             btn:SetScript("OnLeave", function()
-                GameTooltip:Hide()
+                ButtonOnLeaveIcon()
             end)
 
             btn:Show()
@@ -149,10 +182,5 @@ function EHM_MerchantsView:ShowMerchants()
         end
     end
 end
-
--- C_Timer.After(0, function()
---     -- safe to run after full load
---     EHM_MerchantsView:ShowMerchants()
--- end)
 
 EHM.EHM_SideBarViews[EHM.SidebarNavigation.merchants.key] = EHM_MerchantsView
