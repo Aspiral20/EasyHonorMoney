@@ -4,16 +4,26 @@
 
 ## About
 
-EasyHonorMoney is a World of Warcraft Cataclism Classic Addon which provides flexible ui with some features which help users to automatically buy, equip, sell honor items, making as fast as possible gold through this method.
+EasyHonorMoney is a World of Warcraft: Cataclysm Classic addon designed to help players earn gold efficiently by automating the process of buying, equipping, and selling honor items.
 
-## How it works ?
+It features a user-friendly interface to maximize your profit with minimal effort.
 
-To use the addon, speak with one of Merchants(Vendors) which support addon, for examaple: "Sergeant Major Clate" (located in Stormwind).
+## How It Works
 
-If you do not know where to find them, type /ehm in chat and choose "merchants", click on merchant. After that you'll se on map waypoint with the location. (To see waypoints you need to download TomTom addon since on classic is not still available blizzard's waypoints like on retail. Only TomTom colaborate with blizzard's API and can use them)
+To get started, speak with one of the supported merchants (vendors), such as "Sergeant Major Clate" in Stormwind or "First Sergeant Hola'mahi" in Orgrimmar.
+
+If you're unsure where to find them:
+1. Type /ehm in chat.
+2. Open the “Merchants” section.
+3. Click on any merchant in the list.
+This will create a waypoint on your map to their location.
+
+⚠️ Note: You need the TomTom addon installed to see waypoints.
+Blizzard’s built-in waypoint system isn’t available in Classic like it is in Retail.
+TomTom is currently the only addon that integrates with Blizzard's API for this feature.
 
 ## Commands
-1. /ehm - Open UI
-1. /ehm_b or /EHM_B or /easy-honor-money_buy – Buys items (pretty fast)
-2. /ehm_e or /EHM_E or /easy-honor-money_equip – Equips items (pretty fast)
-3. /ehm_s or /EHM_S or /easy-honor-money_sell – Sells items (pretty fast)
+1. /ehm — Opens the main addon UI
+2. /ehm_b, /EHM_B, or /easy-honor-money_buy — Quickly buys items
+3. /ehm_e, /EHM_E, or /easy-honor-money_equip — Quickly equips items
+4. /ehm_s, /EHM_S, or /easy-honor-money_sell — Quickly sells items
