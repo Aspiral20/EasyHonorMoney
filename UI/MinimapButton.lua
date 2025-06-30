@@ -1,10 +1,9 @@
-local ADDON_NAME = EHM.ADDON_NAME or "EasyHonorMoney"
 -- Create Object
 local LDB = LibStub("LibDataBroker-1.1")
 local Broker_LDB;
-Broker_LDB = LDB:NewDataObject(ADDON_NAME, {
+Broker_LDB = LDB:NewDataObject(EHM.ADDON_NAME, {
     type = "launcher",
-    text = ADDON_NAME,
+    text = EHM.ADDON_NAME,
     icon = "Interface\\Icons\\inv_misc_coin_01",
     OnClick = function(_, button)
         if button == "LeftButton" then
@@ -20,7 +19,7 @@ Broker_LDB = LDB:NewDataObject(ADDON_NAME, {
     OnLeave = function(self)
     end,
     OnTooltipShow = function(tooltip)
-        tooltip:AddLine(ADDON_NAME)
+        tooltip:AddLine(EHM.ADDON_NAME)
         tooltip:AddLine(EHM.CHAR_COLORS.yellow .. "Left-click" .. EHM.CHAR_COLORS.reset .. " to open/close UI")
     end,
 })
@@ -75,8 +74,8 @@ loadedFrame:SetScript("OnEvent", function(self, event, addonName)
             if LibStub and LibStub("LibDBIcon-1.0", true) and LDB then
                 local LDBIcon = LibStub("LibDBIcon-1.0")
                 
-                if not LDBIcon:IsRegistered(ADDON_NAME) then
-                    LDBIcon:Register(ADDON_NAME, Broker_LDB, EHM_DB.minimap)
+                if not LDBIcon:IsRegistered(EHM.ADDON_NAME) then
+                    LDBIcon:Register(EHM.ADDON_NAME, Broker_LDB, EHM_DB.minimap)
                 end
             end
         end
