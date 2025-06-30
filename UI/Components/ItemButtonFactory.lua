@@ -1,4 +1,4 @@
-local honorIconPath = "Interface\\PVPFrame\\PVP-Currency-Honor"
+local honorIconPath = EHM.GetHonorIcon().honorIconPath
 
 local function GetCustomItemInfo(itemID)
     local name, link, rarity, level, minLevel, type, subType,

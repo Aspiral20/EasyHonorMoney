@@ -1,4 +1,67 @@
 EHM.Items = {
+    -- Horde
+    [16341] = {
+        index = 16341,
+        price = 2,
+        name = "Sergeant's Cloak",
+        merchant = EHM.Merchants[12795],
+        money = {
+            gold = 0,
+            silver = 85,
+            copper = 70,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+    [18461] = {
+        index = 18461,
+        price = 4,
+        name = "Sergeant's Cloak",
+        merchant = EHM.Merchants[12795],
+        money = {
+            gold = 1,
+            silver = 54,
+            copper = 40,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+    [23467] = {
+        index = 23467,
+        price = 25,
+        name = "High Warlord's Quickblade",
+        merchant = EHM.Merchants[12794],
+        money = {
+            gold = 8,
+            silver = 49,
+            copper = 82,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+    [16345] = {
+        index = 16345,
+        price = 25,
+        name = "High Warlord's Blade",
+        merchant = EHM.Merchants[12794],
+        money = {
+            gold = 8,
+            silver = 57,
+            copper = 79,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+    [18828] = {
+        index = 18828,
+        price = 25,
+        name = "High Warlord's Cleaver",
+        merchant = EHM.Merchants[12794],
+        money = {
+            gold = 8,
+            silver = 70,
+            copper = 65,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+
+    -- Alliance
     [18441] = {
         index = 18441,
         price = 2,

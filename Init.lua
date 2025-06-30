@@ -10,7 +10,7 @@ EHM = {
 }
 -- Debug
 EHM.DEBUG_MODE = false  -- Set to false to disable debug prints
-
+EHM.ADDON_NAME = "EasyHonorMoney"
 local f = CreateFrame("Frame")
 f:RegisterEvent("ADDON_LOADED")
 f:SetScript("OnEvent", function(_, event, addonName)

@@ -4,7 +4,7 @@ local BATCH_DELAY = 0.01 -- slight delay between batches
 
 local function SellItemsByItemID(itemID, itemData, callback)
     if GetMerchantNumItems() == 0 then
-        EHM.Notifications("Please speak with a vendor!")
+        EHM.Notifications("Please speak with a merchant!")
         if callback then callback(false) end
         return
     end
@@ -70,7 +70,7 @@ end)
 
 local function SellItemsByItemID_SeparateCall(itemID)
     if GetMerchantNumItems() == 0 then
-        EHM.Notifications(" Please speak with a vendor before selling items.")
+        EHM.Notifications(" Please speak with a merchant before selling items.")
         return
     end
     

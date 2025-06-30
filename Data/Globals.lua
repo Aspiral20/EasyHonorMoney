@@ -25,3 +25,8 @@ EHM.MONEY_ICONS = {
     silver = "|TInterface\\MoneyFrame\\UI-SilverIcon:0:0:2:0|t",
     copper = "|TInterface\\MoneyFrame\\UI-CopperIcon:0:0:2:0|t",
 }
+EHM.FACTION = {
+    Alliance = "Alliance",
+    Horde = "Horde",
+    Neutral = "Neutral",
+}

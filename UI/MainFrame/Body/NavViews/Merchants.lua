@@ -38,6 +38,24 @@ local function ButtonOnLeaveIcon()
     GameTooltip:Hide()
 end
 
+-- Make playerFaction as top-level variable
+local playerFaction = UnitFactionGroup("player") or EHM.FACTION.Neutral
+local factionIcon = EHM.GetFactionIcon(playerFaction).factionIcon
+local factionWidth = 90
+if playerFaction == EHM.FACTION.Horde then
+    factionWidth = 70
+elseif playerFaction == EHM.FACTION.Alliance then
+    factionWidth = 90
+end
+
+EHM.CreateActionButtons(
+    EHM_MerchantsView,
+    {
+        { name = string.format("%s %s", playerFaction, factionIcon), command = nil, disabled = true, width = factionWidth, height = 24 },
+    },
+    21,
+    -36
+)
 
 function EHM_MerchantsView:ShowMerchants()
     buttons = {}
@@ -46,9 +64,7 @@ function EHM_MerchantsView:ShowMerchants()
     end
     wipe(buttons)
 
-    local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
-
-    local xStart, yStart = 20, -36
+    local xStart, yStart = 20, -75
     local btnSize = 48
     local spacing = 10
     local maxButtonsPerRow = 6
@@ -60,12 +76,11 @@ function EHM_MerchantsView:ShowMerchants()
     local itemsBought, totalSellValue = 0, 0
 
     for merchantID, merchantData in pairs(EHM.Merchants) do
-        if merchantData then
+        if merchantData and (not merchantData.faction or merchantData.faction == playerFaction) then
             local mapInfo = C_Map.GetMapInfo(merchantData.mapID)
             local mapTexture = EHM.MAP_ICONS[merchantData.mapID]
             local race = merchantData.race or EHM.RACE_ICONS["Human"]
-            local raceIconPath = EHM.RACE_ICONS[race.name].iconPath
-            -- EHM.Notifications("Merchant race: " .. race.name .. "\nIconPath: " .. raceIconPath)
+            local raceIconPath = EHM.RACE_ICONS[race.name].iconPath[merchantData.gender]
 
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..merchantID, EHM_MerchantsView, "SecureActionButtonTemplate")
             btn:SetSize(btnSize, btnSize)

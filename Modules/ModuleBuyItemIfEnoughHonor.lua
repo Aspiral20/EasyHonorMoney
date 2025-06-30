@@ -26,14 +26,14 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
     isCancelled = false -- reset on new call
     
     if GetMerchantNumItems() == 0 then
-        EHM.Notifications(" Please talk to vendor.")
+        EHM.Notifications(" Please talk to merchant.")
         if callback then callback(false) end
         return
     end
 
     local slot = FindMerchantSlotByItemID(itemID)
     if not slot then
-        EHM.Notifications(" Item not found at vendor.")
+        EHM.Notifications(" Item not found at merchant.")
         if callback then callback(false) end
         return
     end

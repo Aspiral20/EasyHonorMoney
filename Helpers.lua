@@ -75,18 +75,46 @@ local function FormatGoldWithIcons(g, s, c)
     return out
 end
 
-function GetHonorIcon()
+local function GetHonorIcon()
     local faction = UnitFactionGroup("player")
-    local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
+    local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or EHM.FACTION.Alliance)
     return { honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t", honorIconPath = honorIconPath}
 end
 
-function CreateHonorIcon(frame, width, height)
+local function CreateHonorIcon(frame, width, height)
     local honorIconPath = GetHonorIcon().honorIconPath
     local honorIconFrame = frame:CreateTexture(nil, "OVERLAY")
     honorIconFrame:SetSize(width or 14, height or 14)
     honorIconFrame:SetTexture(honorIconPath)
     return honorIconFrame
+end
+
+-- Faction Logic
+local function GetFactionIcon(outsideFaction)
+    local playerFaction = UnitFactionGroup("player") or EHM.FACTION.Alliance
+    local faction = outsideFaction or playerFaction
+    local factionIconPath = "Interface\\GroupFrame\\UI-Group-PVP-" .. string.upper(faction)
+    return { factionIcon = "|T" .. factionIconPath .. ":14:14:0:0|t", factionIconPath = factionIconPath}
+end
+
+function EHM.CountItemsByFaction(outsideFaction)
+    local playerFaction = UnitFactionGroup("player") or EHM.FACTION.Alliance
+    local faction = outsideFaction or playerFaction
+    local count = 0
+    for _, item in pairs(EHM.Items) do
+        if item.merchant.faction and item.merchant.faction == faction then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+function EHM.CountAllItems()
+    local count = 0
+    for _, item in pairs(EHM.Items) do
+        count = count + 1
+    end
+    return count
 end
 
 local function GetFreeBagSlots()
@@ -188,7 +216,7 @@ local function GetItemsSortedByPrice(itemsTable, descending)
     return sortedList
 end
 
-function SetUsedItem(itemID)
+local function SetUsedItem(itemID)
     EHM_DB.USED_ITEM = EHM.Items[itemID]
     
     -- Update all views that depend on USED_ITEM
@@ -220,6 +248,7 @@ EHM.FormatGoldString = FormatGoldString
 EHM.FormatGoldWithIcons = FormatGoldWithIcons
 EHM.GetHonorIcon = GetHonorIcon
 EHM.CreateHonorIcon = CreateHonorIcon
+EHM.GetFactionIcon = GetFactionIcon
 EHM.GetFreeBagSlots = GetFreeBagSlots
 EHM.IsItemAdded = IsItemAdded
 EHM.GetPlayerHonor = GetPlayerHonor

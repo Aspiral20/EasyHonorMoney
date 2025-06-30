@@ -12,12 +12,28 @@ EHM_ItemsTitle:SetJustifyV("MIDDLE")
 EHM_ItemsTitle:SetFont(EHM.TITLE_FONT, 12, "OUTLINE")
 EHM_ItemsTitle:SetText(EHM.SidebarNavigation.items.title)
 
+-- Make playerFaction as top-level variable
+local playerFaction = UnitFactionGroup("player") or EHM.FACTION.Neutral
+local factionIcon = EHM.GetFactionIcon(playerFaction).factionIcon
+local factionWidth = 90
+if playerFaction == EHM.FACTION.Horde then
+    factionWidth = 100
+elseif playerFaction == EHM.FACTION.Alliance then
+    factionWidth = 90
+end
+
+local factionItemsCount = EHM.CountItemsByFaction(playerFaction)
 EHM.CreateActionButtons(
     EHM_ItemsView,
-    nil,
+    {
+        { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end, disabled = false },
+        { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end, disabled = false },
+        { name = string.format("%s %s (%d)", playerFaction, factionIcon, factionItemsCount), command = nil, disabled = true, width = factionWidth, height = 24 },
+    },
     21,
     -36
 )
+
 -- print(EHM_DB.USED_ITEM and EHM.DUMP(EHM_DB.USED_ITEM))
 buttons = {}
 function EHM_ItemsView:ShowItems()
@@ -33,7 +49,7 @@ function EHM_ItemsView:ShowItems()
         if btn.infoIcon then btn.infoIcon:Hide() end
     end
     table.wipe(buttons)
-    local honorIconPath = "Interface\\ICONS\\pvpcurrency-honor-" .. string.lower(faction or "alliance")
+    local honorIconPath = EHM.GetHonorIcon().honorIconPath
 
     local playerHonor = EHM.GetPlayerHonor()
 
@@ -53,7 +69,7 @@ function EHM_ItemsView:ShowItems()
     for key, item in pairs(SortedItems) do
         local itemID = item.index
         local itemData = EHM.Items[itemID]
-        if itemData then
+        if itemData and (not itemData.merchant.faction or itemData.merchant.faction == playerFaction) then
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..itemID, EHM_ItemsView.content, "SecureActionButtonTemplate")
             btn:SetSize(btnSize, btnSize)
             btn:SetPoint("TOPLEFT", EHM_ItemsView, "TOPLEFT", currentX, currentY)
@@ -137,7 +153,7 @@ function EHM_ItemsView:ShowItems()
                     local honorIcon = "|T" .. honorIconPath .. ":14:14:0:0|t"
                     GameTooltip:AddLine(itemData.name, 1, 1, 1)
                     GameTooltip:AddLine(string.format("x%d = %s / 4k%s", count, EHM.FormatGoldWithIcons(g, s, c), honorIcon), 1, 0.82, 0)
-                    GameTooltip:AddLine(string.format("Vendor: %s", itemData.merchant.name), 1, 1, 1)
+                    GameTooltip:AddLine(string.format("Merchant: %s%s", itemData.merchant.name, factionIcon), 1, 1, 1)
                     
                     local fontString = _G["GameTooltipTextLeft1"]
                     if fontString then

@@ -1,4 +1,4 @@
-local ADDON_NAME = "EasyHonorMoney"
+local ADDON_NAME = EHM.ADDON_NAME or "EasyHonorMoney"
 -- Create Object
 local LDB = LibStub("LibDataBroker-1.1")
 local Broker_LDB;
@@ -74,7 +74,10 @@ loadedFrame:SetScript("OnEvent", function(self, event, addonName)
             EHM_DB.minimap = EHM_DB.minimap or { hide = false };
             if LibStub and LibStub("LibDBIcon-1.0", true) and LDB then
                 local LDBIcon = LibStub("LibDBIcon-1.0")
-                LDBIcon:Register(ADDON_NAME, Broker_LDB, EHM_DB.minimap);
+                
+                if not LDBIcon:IsRegistered(ADDON_NAME) then
+                    LDBIcon:Register(ADDON_NAME, Broker_LDB, EHM_DB.minimap)
+                end
             end
         end
     end

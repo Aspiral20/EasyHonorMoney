@@ -10,8 +10,8 @@ local function CreateActionButtons(frame, actionBtns, x, y, spacing, callback)
         frame.actionButtons = {}
 
         local actionButtons = actionBtns or {
-            { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end },
-            { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end },
+            { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end, disabled = false },
+            { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end, disabled = false },
         }
 
         local startX = x or 15
@@ -20,8 +20,11 @@ local function CreateActionButtons(frame, actionBtns, x, y, spacing, callback)
 
         -- Create buttons once
         for i, data in ipairs(actionButtons) do
-            local btn = EHM.AddonButton(frame.content, data.name, 65, 24, data.command)
+            local btn = EHM.AddonButton(frame.content, data.name, data.width or 65, data.height or 24, data.command)
             btn:SetPoint("TOPLEFT", frame.content, "TOPLEFT", startX + (i - 1) * spacingBetween, startY)
+            if data.disabled then
+                btn:SetDisabled(true)
+            end
             frame.actionButtons[#frame.actionButtons + 1] = btn
         end
         

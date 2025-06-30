@@ -7,9 +7,9 @@ EHM.SidebarNavigation = {
     },
     merchants = {
         key = "merchants",
-        label = "Vendors",
+        label = "Merchants",
         order = 2,
-        title = "Available Vendors",
+        title = "Available Merchants",
     },
     item_check = {
         key = "item_check",

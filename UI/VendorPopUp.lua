@@ -70,6 +70,7 @@ closeBtn:SetPoint("TOPRIGHT", EHM_HonorVendor, "TOPRIGHT", buttonsY, buttonsY)
 closeBtn:SetScript("OnClick", function()
     EHM_HonorVendor:Hide()
 end)
+local factionIcon = EHM.GetFactionIcon(playerFaction).factionIcon
 
 function EHM_HonorVendor:BuildPopup()
     -- Clear old buttons after changing "EHM_DB.USED_ITEM"
@@ -183,7 +184,7 @@ function EHM_HonorVendor:BuildPopup()
 
                     GameTooltip:AddLine(itemData.name, 1, 1, 1)
                     GameTooltip:AddLine(string.format("x%d = %s / 4k%s", count, EHM.FormatGoldWithIcons(g, s, c), EHM.GetHonorIcon().honorIcon), 1, 0.82, 0)
-                    GameTooltip:AddLine(string.format("Vendor: %s", itemData.merchant.name), 1, 1, 1)
+                    GameTooltip:AddLine(string.format("Merchant: %s%s", itemData.merchant.name, factionIcon), 1, 1, 1)
                     
                     local fontString = _G["GameTooltipTextLeft1"]
                     if fontString then

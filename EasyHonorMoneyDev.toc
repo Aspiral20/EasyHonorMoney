@@ -19,6 +19,7 @@ Libs\LibStub\LibStub.lua
 Init.lua
 
 # Data
+Data/Globals.lua
 Data/Colors.lua
 Data/Fonts.lua
 Data/Commands.lua
@@ -26,7 +27,6 @@ Data/Currencies.lua
 Data/Character.lua
 Data/Merchants.lua
 Data/Items.lua
-Data/Globals.lua
 UI/MainFrame/Body/NavViews/Data.lua
 
 # Pre-Helpers

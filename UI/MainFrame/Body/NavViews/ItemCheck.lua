@@ -48,7 +48,7 @@ end)
 frame.itemTitleInput = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 frame.itemTitleInput:SetFont(EHM.TITLE_FONT, 12, "OUTLINE")
 frame.itemTitleInput:SetPoint("LEFT", frame.itemInput, "LEFT", -100, 0)
-frame.itemTitleInput:SetText("ItemId/Link")
+frame.itemTitleInput:SetText("ItemID/Link")
 
 frame.itemInputIcon = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 frame.itemInputIcon:SetFont(EHM.TITLE_FONT, 14, "OUTLINE")
@@ -117,7 +117,7 @@ frame.searchBtn:SetScript("OnClick", function()
     local input = frame.itemInput:GetText()
     local itemID = tonumber(input:match("item:(%d+)") or input)
     if not itemID then
-        frame.resultText:SetText("Not found item ID/Link")
+        frame.resultText:SetText("Not found ItemID/Link")
         frame.resultIcon:SetText(string.format("|T%s:14|t", defaultIconPath))
         return
     end

@@ -10,7 +10,7 @@ EasyHonorMoney is a World of Warcraft Cataclism Classic Addon which provides fle
 
 To use the addon, speak with one of Merchants(Vendors) which support addon, for examaple: "Sergeant Major Clate" (located in Stormwind).
 
-If you do not know where to find them, type /ehm in chat and choose "vendors", click on vendor. After that you'll se on map waypoint with the location. (To see waypoints you need to download TomTom addon since on classic is not still available blizzard's waypoints like on retail. Only TomTom colaborate with blizzard's API and can use them)
+If you do not know where to find them, type /ehm in chat and choose "merchants", click on merchant. After that you'll se on map waypoint with the location. (To see waypoints you need to download TomTom addon since on classic is not still available blizzard's waypoints like on retail. Only TomTom colaborate with blizzard's API and can use them)
 
 ## Commands
 1. /ehm - Open UI
