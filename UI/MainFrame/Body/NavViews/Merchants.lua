@@ -125,7 +125,7 @@ function EHM_MerchantsView:ShowMerchants()
 
             btn:SetScript("OnClick", function()
                 if not TomTom or not merchantData.mapID or not merchantData.x or not merchantData.y then
-                    EHM.NotificationsWarning("TomTom not found or merchant missing coordinates. Install TomTom to see waypoints")
+                    EHM.NotificationsWarning("TomTom is not installed. This addon relies on TomTom for waypoint support—please install it to use this feature.")
                     return
                 end
 
