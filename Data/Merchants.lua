@@ -76,37 +76,35 @@ EHM.RACE_ICONS = {
 }
 
 EHM.MAP_ICONS = {
-    -- Capital Cities (with associated zones)
-    [1453] = { id = 1453, name = "Stormwind City",    zone = "Elwynn Forest",     path = "Interface\\Icons\\Achievement_Zone_Elwynnforest" },
-    [1454] = { id = 1454, name = "Orgrimmar",         zone = "Durotar",           path = "Interface\\Icons\\Achievement_Zone_Durotar" },
-    [1455] = { id = 1455, name = "Ironforge",         zone = "Dun Morogh",        path = "Interface\\Icons\\Achievement_Zone_DunMorogh" },
-    [1457] = { id = 1457, name = "Darnassus",         zone = "Teldrassil",        path = "Interface\\Icons\\Achievement_Zone_Teldrassil" },
-    [1458] = { id = 1458, name = "Undercity",         zone = "Tirisfal Glades",   path = "Interface\\Icons\\Achievement_Zone_Tirisfal" },
-    [1456] = { id = 1456, name = "Thunder Bluff",     zone = "Mulgore",           path = "Interface\\Icons\\Achievement_Zone_Mulgore" },
-    [471]  = { id = 471,  name = "The Exodar",        zone = "Azuremyst Isle",    path = "Interface\\Icons\\Achievement_Zone_AzuremystIsle" },
-    [481]  = { id = 481,  name = "Silvermoon City",   zone = "Eversong Woods",    path = "Interface\\Icons\\Achievement_Zone_EversongWoods" },
-    [1955] = { id = 1955, name = "Shattrath City",    zone = "Terokkar Forest",   path = "Interface\\Icons\\Achievement_Zone_TerokkarForest" },
-    
-    [504]  = { id = 504,  name = "Dalaran",           zone = "Crystalsong Forest",path = "Interface\\Icons\\Achievement_Zone_CrystalsongForest" },
-    [485]  = { id = 485,  name = "Dalaran (Northrend)",zone = "Crystalsong Forest",path = "Interface\\Icons\\Achievement_Zone_CrystalsongForest" },
+    [84]  = { id = 84,  name = "Stormwind City",    zone = "Elwynn Forest",     path = "Interface\\Icons\\Achievement_Zone_Elwynnforest" },
+    [85]  = { id = 85,  name = "Orgrimmar",         zone = "Durotar",           path = "Interface\\Icons\\Achievement_Zone_Durotar" },
+    [87]  = { id = 87,  name = "Ironforge",         zone = "Dun Morogh",        path = "Interface\\Icons\\Achievement_Zone_DunMorogh" },
+    [89]  = { id = 89,  name = "Darnassus",         zone = "Teldrassil",        path = "Interface\\Icons\\Achievement_Zone_Teldrassil" },
+    [90]  = { id = 90,  name = "Undercity",         zone = "Tirisfal Glades",   path = "Interface\\Icons\\Achievement_Zone_Tirisfal" },
+    [88]  = { id = 88,  name = "Thunder Bluff",     zone = "Mulgore",           path = "Interface\\Icons\\Achievement_Zone_Mulgore" },
+    [103] = { id = 103, name = "The Exodar",        zone = "Azuremyst Isle",    path = "Interface\\Icons\\Achievement_Zone_AzuremystIsle" },
+    [110] = { id = 110, name = "Silvermoon City",   zone = "Eversong Woods",    path = "Interface\\Icons\\Achievement_Zone_EversongWoods" },
+    [111] = { id = 111, name = "Shattrath City",    zone = "Terokkar Forest",   path = "Interface\\Icons\\Achievement_Zone_TerokkarForest" },
+    [125] = { id = 125, name = "Dalaran",           zone = "Crystalsong Forest",path = "Interface\\Icons\\Achievement_Zone_CrystalsongForest" },
 
-    -- Cataclysm Zones (standalone)
-    [640]  = { id = 640,  name = "Deepholm",          zone = "Deepholm",          path = "Interface\\Icons\\Achievement_Zone_Deepholm" },
-    [605]  = { id = 605,  name = "Kezan",             zone = "Kezan",             path = "Interface\\Icons\\Achievement_Zone_Kezan" },
-    [544]  = { id = 544,  name = "Gilneas",           zone = "Gilneas",           path = "Interface\\Icons\\Achievement_Zone_Gilneas" },
-    [737]  = { id = 737,  name = "The Lost Isles",    zone = "The Lost Isles",    path = "Interface\\Icons\\Achievement_Zone_LostIsles" },
-    [709]  = { id = 709,  name = "Tol Barad",         zone = "Tol Barad",         path = "Interface\\Icons\\Achievement_Zone_TolBarad" },
+    -- Cataclysm zones remain unchanged (unless they were remapped in MoP, which is rare):
+    [640] = { id = 640, name = "Deepholm",          zone = "Deepholm",          path = "Interface\\Icons\\Achievement_Zone_Deepholm" },
+    [605] = { id = 605, name = "Kezan",             zone = "Kezan",             path = "Interface\\Icons\\Achievement_Zone_Kezan" },
+    [544] = { id = 544, name = "Gilneas",           zone = "Gilneas",           path = "Interface\\Icons\\Achievement_Zone_Gilneas" },
+    [737] = { id = 737, name = "The Lost Isles",    zone = "The Lost Isles",    path = "Interface\\Icons\\Achievement_Zone_LostIsles" },
+    [709] = { id = 709, name = "Tol Barad",         zone = "Tol Barad",         path = "Interface\\Icons\\Achievement_Zone_TolBarad" },
 }
 
 -- Add for horde (mapId = 85 - Ogrimar)
 -- Viev uoir current mapId, use in chat:
 -- /dump C_Map.GetBestMapForUnit("player")
 EHM.Merchants = {
+    -- Horde
     [12795] = {
         index = 12795,
         name = "First Sergeant Hola'mahi",
         title = "<Legacy Armor Quartermaster>",
-        mapID = EHM.MAP_ICONS[1454].id,
+        mapID = EHM.MAP_ICONS[85].id,
         x = 38.36,
         y = 73.08,
         race = EHM.RACE_ICONS["Troll"],
@@ -117,18 +115,19 @@ EHM.Merchants = {
         index = 12794,
         name = "Stone Guard Zarg",
         title = "<Legacy Weapon Quartermaster>",
-        mapID = EHM.MAP_ICONS[1454].id,
+        mapID = EHM.MAP_ICONS[85].id,
         x = 38.52,
         y = 73.09,
         race = EHM.RACE_ICONS["Orc"],
         faction = EHM.FACTION.Horde,
         gender = EHM.MERCHANT_GENDER.male,
     },
+    -- Alliance
     [12785] = {
         index = 12785,
         name = "Sergeant Major Clate",
         title = "<Legacy Armor Quartermaster>",
-        mapID = EHM.MAP_ICONS[1453].id,
+        mapID = EHM.MAP_ICONS[84].id,
         x = 75.62,
         y = 67.18,
         race = EHM.RACE_ICONS["Dwarf"],
@@ -139,7 +138,7 @@ EHM.Merchants = {
         index = 12784,
         name = "Lieutenant Jackspring",
         title = "<Legacy Weapon Quartermaster>",
-        mapID = EHM.MAP_ICONS[1453].id,
+        mapID = EHM.MAP_ICONS[84].id,
         x = 75.49,
         y = 67.30,
         race = EHM.RACE_ICONS["Gnome"],
