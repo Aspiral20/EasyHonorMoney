@@ -4,7 +4,7 @@
 
 ## About
 
-EasyHonorMoney is a World of Warcraft: Cataclysm Classic addon designed to help players earn gold efficiently by automating the process of buying, equipping, and selling honor items.
+EasyHonorMoney is a World of Warcraft: Mists of Pandaria Classic addon designed to help players earn gold efficiently by automating the process of buying, equipping, and selling honor items.
 
 It features a user-friendly interface to maximize your profit with minimal effort.
 
