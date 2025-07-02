@@ -1,6 +1,6 @@
 # File last updated: 2025-06-23T10:20:00Z
 
-## Interface: 11507, 40402, 110105
+## Interface: 50500
 ## Title: EasyHonorMoneyDev
 ## Notes: Provides flexible ui with some features which help users to automatically buy, equip, sell honor items.
 ## Author: Aspiral

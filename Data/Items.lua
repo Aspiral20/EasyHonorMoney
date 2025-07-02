@@ -68,9 +68,9 @@ EHM.Items = {
         name = "Sergeant's Cape",
         merchant = EHM.Merchants[12785],
         money = {
-            gold = 0,
-            silver = 83,
-            copper = 56,
+            gold = 1,
+            silver = 82,
+            copper = 44,
         },
         currencyIndex = EHM.HONOR_INDEX
     },
@@ -80,9 +80,9 @@ EHM.Items = {
         name = "Sergeant's Cape",
         merchant = EHM.Merchants[12785],
         money = {
-            gold = 1,
-            silver = 58,
-            copper = 96,
+            gold = 3,
+            silver = 47,
+            copper = 7,
         },
         currencyIndex = EHM.HONOR_INDEX
     },
@@ -92,9 +92,9 @@ EHM.Items = {
         name = "Grand Marshal's Handaxe",
         merchant = EHM.Merchants[12784],
         money = {
-            gold = 8,
-            silver = 67,
-            copper = 58,
+            gold = 10,
+            silver = 84,
+            copper = 48,
         },
         currencyIndex = EHM.HONOR_INDEX
     },
@@ -104,9 +104,9 @@ EHM.Items = {
         name = "Grand Marshal's Longsword",
         merchant = EHM.Merchants[12784],
         money = {
-            gold = 8,
-            silver = 60,
-            copper = 44,
+            gold = 10,
+            silver = 75,
+            copper = 56,
         },
         currencyIndex = EHM.HONOR_INDEX
     },
@@ -116,9 +116,9 @@ EHM.Items = {
         name = "Grand Marshal's Punisher",
         merchant = EHM.Merchants[12784],
         money = {
-            gold = 8,
-            silver = 61,
-            copper = 27,
+            gold = 10,
+            silver = 76,
+            copper = 59,
         },
         currencyIndex = EHM.HONOR_INDEX
     },

@@ -173,7 +173,7 @@ end
 
 local function GetPlayerHonor()
     local honorPoints = 0
-    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(390) -- Honor ID
+    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(EHM.HONOR_INDEX)
     if currencyInfo then honorPoints = currencyInfo.quantity or 0 end
     return honorPoints
 end

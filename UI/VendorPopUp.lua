@@ -105,6 +105,7 @@ function EHM_HonorVendor:BuildPopup()
 
         if itemID and itemData then
             local canAfford = playerHonor >= itemData.price
+            print(playerHonor, itemData.price, canAfford)
 
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..itemID, EHM_HonorVendor.content, "SecureActionButtonTemplate")
             btn:SetSize(btnSize, btnSize)
@@ -148,7 +149,7 @@ function EHM_HonorVendor:BuildPopup()
                 btn.priceText:SetPoint("TOP", btn, "BOTTOM", -8, -8)
             end
             btn.priceText:SetText(itemData.price)
-            btn.priceText:SetTextColor(canAfford and 1 or 0, canAfford and 1 or 0, canAfford and 1 or 0)
+            btn.priceText:SetTextColor(canAfford and 0.8 or 0, canAfford and 0.8 or 0, canAfford and 0.8 or 0)
 
             if not btn.honorIcon then
                 btn.honorIcon = EHM.CreateHonorIcon(btn, 14, 14)
