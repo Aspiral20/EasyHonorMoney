@@ -62,3 +62,58 @@ function EHM.HM_EquipOriginalItem(originalItemID, equipSlot)
         EHM.NotificationsError("Original item not found in bags.")
     end)
 end
+
+function EHM.HM_GetAllHonorItemsAtVendor()
+    local honorItems = {}
+    
+    for i = 1, GetMerchantNumItems() do
+        local itemLink = GetMerchantItemLink(i)
+        if itemLink then
+            local itemID = tonumber(itemLink:match("item:(%d+):"))
+            local costInfoCount = GetMerchantItemCostInfo(i)
+
+            for j = 1, costInfoCount do
+                local _, amount, currencyLink = GetMerchantItemCostItem(i, j)
+                local currencyID = tonumber(currencyLink and currencyLink:match("currency:(%d+)"))
+                local copper = EHM.GetRealTimePriceItem(itemID)
+                local gold, silver, copper = EHM.SplitMoney(copper)
+                local count = math.floor(4000 / amount)
+
+                local copperFor4k = count * (
+                    (gold or 0) * 10000 +
+                    (silver or 0) * 100 +
+                    (copper or 0)
+                )
+
+                local gold4k = math.floor(copperFor4k / 10000)
+                local silver4k = math.floor((copperFor4k % 10000) / 100)
+                local copper4k = copperFor4k % 100
+                
+                if currencyID == EHM.HONOR_INDEX then -- Honor Points ID
+                    honorItems[itemID] = {
+                        index = i,
+                        itemID = itemID,
+                        honor = amount,
+                        link = itemLink,
+                        sellingPrice = copper,
+                        money = {
+                            gold = gold,
+                            silver = silver,
+                            copper = copper,
+                        },
+                        sellingPriceFor4k = copperFor4k,
+                        moneyFor4k = {
+                            gold = gold4k,
+                            silver = silver4k,
+                            copper = copper4k,
+                        },
+                        countItemsFor4k = count,
+                    }
+                end
+            end
+        end
+    end
+
+    local sortedItems = EHM.GetItemsSortedByPrice(honorItems, "sellingPriceFor4k")
+    return sortedItems
+end

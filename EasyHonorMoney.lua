@@ -15,6 +15,12 @@ local function RunEHMSell()
     EHM.MODULES.SellItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index)
 end
 
+-- Nice, now I need to create a statistic of items which vendor sell how do I create this?
+
+local function ViewVendorStatistic()
+    EHM.MODULES.VendorGoldStatistic()
+end
+
 local function OpenUI() 
     EHM_MainFrame:Show()
 end
@@ -34,6 +40,13 @@ EHM.RegisterSlashCommand(
 )
 SlashCmdList[EHM.COMMANDS.UI.key] = OpenUI
 
+-- Vendor Statistic
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.VENDOR_STATISTIC.key .. "1",
+    EHM.COMMANDS.VENDOR_STATISTIC.register
+)
+SlashCmdList[EHM.COMMANDS.VENDOR_STATISTIC.key] = ViewVendorStatistic
+
 -- All together
 EHM.RegisterSlashCommand(
     EHM.COMMANDS.ALL.key .. "1",
@@ -48,6 +61,7 @@ EHM.RegisterSlashCommand(
     EHM.COMMANDS.ALL.M3.register
 )
 SlashCmdList[EHM.COMMANDS.ALL.key] = RunAutoBuyEquipSell
+
 -- Only Buy
 EHM.RegisterSlashCommand(
     EHM.COMMANDS.BUY.key .. "1",
@@ -62,6 +76,7 @@ EHM.RegisterSlashCommand(
     EHM.COMMANDS.BUY.B3.register
 )
 SlashCmdList[EHM.COMMANDS.BUY.key] = RunEHMBuy
+
 -- Only Equip
 EHM.RegisterSlashCommand(
     EHM.COMMANDS.EQUIP.key .. "1",

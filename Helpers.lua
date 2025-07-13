@@ -195,8 +195,9 @@ end
 -- or
 -- local sortedItemsDesc = GetItemsSortedByPrice(EHM.Items, true) -- true = descending
 
-local function GetItemsSortedByPrice(itemsTable, descending)
+local function GetItemsSortedByPrice(itemsTable, field, descending)
     local sortDirection = descending or false
+    local field = field or "price"
 
     -- Step 1: Copy items into a new list
     local sortedList = {}
@@ -207,9 +208,9 @@ local function GetItemsSortedByPrice(itemsTable, descending)
     -- Step 2: Sort the copied list
     table.sort(sortedList, function(a, b)
         if sortDirection then
-            return a.price > b.price
+            return a[field] > b[field]
         else
-            return a.price < b.price
+            return a[field] < b[field]
         end
     end)
 
@@ -253,6 +254,44 @@ function EHM.HasItemInBags(itemID)
     end
     return false
 end
+function EHM.GetRealTimePriceItem(itemID)
+    local itemName, _, _, _, _, _, _, _, _, _, vendorPrice = GetItemInfo(itemID)
+    if vendorPrice then
+        return vendorPrice -- in copper (1g = 10000)
+    else
+        print("Item not cached:", itemID)
+        return 0
+    end
+end
+
+function EHM.GetRealTimeHonorCostForItem(itemID)
+    for i = 1, GetMerchantNumItems() do
+        local link = GetMerchantItemLink(i)
+        if link then
+            local id = tonumber(link:match("item:(%d+):"))
+            if id == itemID then
+                local costInfoCount = GetMerchantItemCostInfo(i)
+                for j = 1, costInfoCount do
+                    local texture, amount, currencyLink, quality = GetMerchantItemCostItem(i, j)
+
+                    local currencyID = tonumber(currencyLink and currencyLink:match("currency:(%d+)"))
+                    if currencyID == EHM.HONOR_INDEX then
+                        return amount
+                    end
+                end
+            end
+        end
+    end
+    return nil
+end
+
+function EHM.SplitMoney(copper)
+    local gold = math.floor(copper / 10000)
+    local silver = math.floor((copper % 10000) / 100)
+    local copperOnly = copper % 100
+    return gold, silver, copperOnly
+end
+
 
 EHM.DUMP = DumpTable
 EHM.CreateLoadingFunction = CreateLoadingFunction
@@ -270,7 +309,7 @@ EHM.GetItemsSortedByPrice = GetItemsSortedByPrice
 EHM.SetUsedItem = SetUsedItem
 
 EHM.RegisterSlashCommand(
-    EHM.COMMANDS.LIST.key,
+    EHM.COMMANDS.LIST.key .. "1",
     EHM.COMMANDS.LIST.register
 )
 SlashCmdList[EHM.COMMANDS.LIST.key] = function()

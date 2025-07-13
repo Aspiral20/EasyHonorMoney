@@ -43,6 +43,7 @@ Modules/ModuleAutoBuyEquipSellItemsByItemID.lua
 Modules/ModuleBuyItemIfEnoughHonor.lua
 Modules/ModuleEquipItemsByItemID.lua
 Modules/ModuleSellItemsByItemID.lua
+Modules/ModuleVendorGoldStatistic.lua
 
 # UI Components
 UI/Components/Button.lua

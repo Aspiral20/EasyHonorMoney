@@ -266,6 +266,7 @@ EHM.CreateActionButtons(
         { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end },
         { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end },
         { name = "Auto",  command = function() SlashCmdList[EHM.COMMANDS.ALL.key]("") end },
+        { name = "Statistic",  command = function() SlashCmdList[EHM.COMMANDS.VENDOR_STATISTIC.key]("") end },
     },
     15,
     -39,

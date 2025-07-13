@@ -40,7 +40,8 @@ EHM.COMMANDS = {
         M1 = ParseCommand("/easy-honor-money_all"),
         M2 = ParseCommand("/EHM_ALL"),
         M3 = ParseCommand("/ehm_all"),
-    }
+    },
+    VENDOR_STATISTIC = ParseCommand("/ehm_vstat")
 }
 
 local function RegisterSlashCommand(key, register)
