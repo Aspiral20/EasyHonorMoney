@@ -12,7 +12,7 @@ function VendorGoldStatistic()
 
     local honorTable = EHM.HM_GetAllHonorItemsAtVendor()
     for id, item in pairs(honorTable) do
-        print(string.format("ItemID %d %s costs %d honor (Merchant slot %d), selling price: %s, profit: x%d = %s / 4k%s", id, item.link, item.honor, item.index, GetCoinTextureString(item.sellingPrice), item.countItemsFor4k, EHM.FormatGoldWithIcons(item.moneyFor4k.gold, item.moneyFor4k.silver, item.moneyFor4k.copper), EHM.GetHonorIcon().honorIcon))
+        print(string.format("ItemID %d %s costs %d%s (Merchant slot %d), selling price: %s, profit: x%d = %s / 4k%s", id, item.link, item.honor, EHM.GetHonorIcon().honorIcon, item.index, GetCoinTextureString(item.sellingPrice), item.countItemsFor4k, EHM.FormatGoldWithIcons(item.moneyFor4k.gold, item.moneyFor4k.silver, item.moneyFor4k.copper), EHM.GetHonorIcon().honorIcon))
     end
 end
 
