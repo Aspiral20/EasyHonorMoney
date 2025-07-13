@@ -83,7 +83,9 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
     end
 
     BuyBatch()
-    EHM.LOADERS.buy = false
+    C_Timer.After(1, function()
+        EHM.LOADERS.buy = false
+    end)
 end
 
 EHM.MODULES.BuyItemsIfEnoughHonor = BuyItemsIfEnoughHonor

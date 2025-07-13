@@ -129,7 +129,9 @@ local function SellItemsByItemID_SeparateCall(itemID, disabledNotifications)
     end
 
     SellNext()
-    EHM.LOADERS.sell = false
+    C_Timer.After(1, function()
+        EHM.LOADERS.sell = false
+    end)
 end
 
 EHM.MODULES.SellItemsByItemID = SellItemsByItemID

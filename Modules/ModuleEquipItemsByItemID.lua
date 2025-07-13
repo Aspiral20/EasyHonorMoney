@@ -133,7 +133,9 @@ local function EquipItemsByItemID_SeparateCall(itemID, isAutoMode)
     if not isAutoMode then
         EHM.HM_EquipOriginalItem(originalItemID, equipSlot)
     end
-    EHM.LOADERS.equip = false
+    C_Timer.After(1, function()
+        EHM.LOADERS.equip = false
+    end)
 end
 
 EHM.MODULES.EquipItemsByItemID = EquipItemsByItemID
