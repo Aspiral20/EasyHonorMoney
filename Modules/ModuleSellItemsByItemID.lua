@@ -1,4 +1,4 @@
-local MAX_SELL_PER_BATCH = 15
+local MAX_SELL_PER_BATCH = 12
 local SELL_DELAY = 0  -- safe minimum delay between items
 local BATCH_DELAY = 0.01 -- slight delay between batches
 
@@ -61,20 +61,14 @@ end
 local isSellingCancelled = false
 
 -- Reuse eventFrame from previous buy function, but extend it:
-EHM.MerchantEventFrame:HookScript("OnEvent", function(self, event)
-    if event == "MERCHANT_CLOSED" then
-        isSellingCancelled = true
-        isCancelled = true -- if also running buy at same time
-    end
-end)
-
-local function SellItemsByItemID_SeparateCall(itemID)
+local function SellItemsByItemID_SeparateCall(itemID, disabledNotifications)
+    disabledNotifications = disabledNotifications or false
+    EHM.LOADERS.sell = true
     if GetMerchantNumItems() == 0 then
         EHM.Notifications(" Please speak with a merchant before selling items.")
         return
     end
-    
-    isSellingCancelled = false
+    EHM.IsClosedMerchant = false
 
     local C = C_Container
     local vendorPrice = 0
@@ -102,16 +96,16 @@ local function SellItemsByItemID_SeparateCall(itemID)
 
     -- Step 2: Sell items one by one with short delay
     local function SellNext()
-        if #itemsToSell == 0 or isSellingCancelled then
+        if #itemsToSell == 0 or EHM.IsClosedMerchant then
             local g = math.floor(totalGoldEarned / 10000)
             local s = math.floor((totalGoldEarned % 10000) / 100)
             local c = totalGoldEarned % 100
             local goldString = EHM.FormatGoldWithIcons(g, s, c)
 
-            if isSellingCancelled and #itemsToSell > 0 then
-                EHM.NotificationsWarning(string.format(" Selling cancelled early — sold %d/%d × itemID %d, earned %s", soldCount, totalItems, itemID, goldString))
+            if EHM.IsClosedMerchant and #itemsToSell > 0 then
+                if not disabledNotifications then EHM.NotificationsWarning(string.format(" Selling cancelled early — sold %d/%d × itemID %d, earned %s", soldCount, totalItems, itemID, goldString)) end
             else
-                EHM.Notifications(string.format("Sold %d × itemID %d, earned %s", soldCount, itemID, goldString))
+                if not disabledNotifications then EHM.Notifications(string.format("Sold %d × itemID %d, earned %s", soldCount, itemID, goldString)) end
             end
             return
         end
@@ -128,13 +122,14 @@ local function SellItemsByItemID_SeparateCall(itemID)
             local s = math.floor((totalGoldEarned % 10000) / 100)
             local c = totalGoldEarned % 100
             local bar = EHM.GetProgressBar(soldCount, totalItems)
-            EHM.Notifications(string.format("%s %d/%d sold — %s earned", bar, soldCount, totalItems, EHM.FormatGoldWithIcons(g, s, c)))
+            if not disabledNotifications then EHM.Notifications(string.format("%s %d/%d sold — %s earned", bar, soldCount, totalItems, EHM.FormatGoldWithIcons(g, s, c))) end
         end
 
         C_Timer.After(0.15, SellNext)
     end
 
     SellNext()
+    EHM.LOADERS.sell = false
 end
 
 EHM.MODULES.SellItemsByItemID = SellItemsByItemID

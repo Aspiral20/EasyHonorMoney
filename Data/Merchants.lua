@@ -145,4 +145,15 @@ EHM.Merchants = {
         faction = EHM.FACTION.Alliance,
         gender = EHM.MERCHANT_GENDER.male,
     },
+    [12778] = {
+        index = 12778,
+        name = "Lieutenant Rachel Vaccar",
+        title = "<Outland Armor Quartermaster>",
+        mapID = EHM.MAP_ICONS[84].id,
+        x = 75.32,
+        y = 67.45,
+        race = EHM.RACE_ICONS["Human"],
+        faction = EHM.FACTION.Alliance,
+        gender = EHM.MERCHANT_GENDER.female,
+    },
 }

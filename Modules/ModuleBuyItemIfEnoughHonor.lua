@@ -1,4 +1,4 @@
-local MAX_BUY_PER_BATCH = 15
+local MAX_BUY_PER_BATCH = 12
 local BUY_DELAY = 0.1 -- seconds between buys
 local BATCH_DELAY = 0.5 -- delay after batch to avoid vendor limit
 
@@ -16,14 +16,10 @@ local function FindMerchantSlotByItemID(itemID)
     return nil
 end
 
-EHM.MerchantEventFrame:SetScript("OnEvent", function(self, event)
-    if event == "MERCHANT_CLOSED" then
-        isCancelled = true
-    end
-end)
-
 local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
-    isCancelled = false -- reset on new call
+    EHM.LOADERS.buy = true
+    EHM.IsClosedMerchant = false -- reset on new call
+    local itemData = EHM.Items[itemID]
     
     if GetMerchantNumItems() == 0 then
         EHM.Notifications(" Please talk to merchant.")
@@ -33,18 +29,24 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
 
     local slot = FindMerchantSlotByItemID(itemID)
     if not slot then
-        EHM.Notifications(" Item not found at merchant.")
+        EHM.NotificationsWarning(" Item not found at merchant.")
         if callback then callback(false) end
         return
     end
+    local playerHonor = EHM.GetPlayerHonor()
+    local cost = itemData.price
+    local canAfford = playerHonor >= cost
+
+    if not canAfford then
+        EHM.NotificationsWarning(string.format("You don't have enough honor to buy \"%s: %s%s\".", itemData.name, itemData.price, EHM.GetHonorIcon().honorIcon))
+    end
 
     local honor = GetCurrencyInfo(EHM.HONOR_INDEX).quantity
-    local cost = EHM.Items[itemID].price
     local remaining = math.min(countItems, math.floor(honor / cost))
     local bought = 0
 
     local function BuyBatch()
-        if isCancelled then
+        if EHM.IsClosedMerchant then
             EHM.NotificationsWarning("Purchase cancelled (merchant closed).")
             if callback then callback(false) end
             return
@@ -52,7 +54,7 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
         local batchCount = math.min(MAX_BUY_PER_BATCH, remaining - bought)
 
         local function BuyNextInBatch(i)
-            if isCancelled then
+            if EHM.IsClosedMerchant then
                 EHM.NotificationsWarning("Purchase cancelled during batch.")
                 if callback then callback(false) end
                 return
@@ -81,6 +83,7 @@ local function BuyItemsIfEnoughHonor(itemID, countItems, callback)
     end
 
     BuyBatch()
+    EHM.LOADERS.buy = false
 end
 
 EHM.MODULES.BuyItemsIfEnoughHonor = BuyItemsIfEnoughHonor

@@ -25,6 +25,7 @@ Data/Fonts.lua
 Data/Commands.lua
 Data/Currencies.lua
 Data/Character.lua
+Data/Loaders.lua
 Data/Merchants.lua
 Data/Items.lua
 UI/MainFrame/Body/NavViews/Data.lua
@@ -37,6 +38,8 @@ Helpers.lua
 Events/MerchantEvent.lua
 
 # Modules
+Modules/Helpers.lua
+Modules/ModuleAutoBuyEquipSellItemsByItemID.lua
 Modules/ModuleBuyItemIfEnoughHonor.lua
 Modules/ModuleEquipItemsByItemID.lua
 Modules/ModuleSellItemsByItemID.lua
@@ -59,6 +62,10 @@ UI/MainFrame/Body/BodyContent.lua
 UI/MainFrame/Body/NavViews/Items.lua
 UI/MainFrame/Body/NavViews/Merchants.lua
 UI/MainFrame/Body/NavViews/ItemCheck.lua
+UI/OptionsPanel.lua
 UI/MinimapButton.lua
 UI/Settings.lua
 UI/VendorPopUp.lua
+
+# Tests for Loading
+Loaded.lua

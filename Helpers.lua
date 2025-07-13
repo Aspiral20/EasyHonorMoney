@@ -241,6 +241,19 @@ eventFrame:SetScript("OnEvent", function(self, event, addonName)
     end
 end)
 
+function EHM.HasItemInBags(itemID)
+    for bag = 0, NUM_BAG_SLOTS do
+        local numSlots = C_Container.GetContainerNumSlots(bag)
+        for slot = 1, numSlots do
+            local item = C_Container.GetContainerItemLink(bag, slot)
+            if item and item:find("item:" .. itemID) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 EHM.DUMP = DumpTable
 EHM.CreateLoadingFunction = CreateLoadingFunction
 EHM.GetProgressBar = GetProgressBar

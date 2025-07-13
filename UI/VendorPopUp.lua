@@ -132,10 +132,6 @@ function EHM_HonorVendor:BuildPopup()
             btn.border:Show()
 
             btn:SetScript("OnClick", function()
-                if not canAfford then
-                -- You don't have enough Honor points to buy this item.
-                    return
-                end
                 if EHM.IsItemAdded(itemID) then
                 -- Item already added to DB.
                     return
@@ -241,7 +237,6 @@ eventFrame:SetScript("OnEvent", function(self, event)
         if npcID and EHM.Merchants[npcID] then
             local hasHonorItems = EHM_HonorVendor:BuildPopup()
             if hasHonorItems then
-            -- Ensure it's not minimized when reopening
                 minimized = false
                 if EHM_HonorVendor.content then
                     EHM_HonorVendor.content:Show()
@@ -270,6 +265,7 @@ EHM.CreateActionButtons(
         { name = "Buy",   command = function() SlashCmdList[EHM.COMMANDS.BUY.key]("") end },
         { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end },
         { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end },
+        { name = "Auto",  command = function() SlashCmdList[EHM.COMMANDS.ALL.key]("") end },
     },
     15,
     -39,

@@ -1,3 +1,4 @@
+-- Output command Example: { registered = "/ehm-debug", key = "ehm-debug" }
 local function ParseCommand(cmd)
     if type(cmd) ~= "string" then return nil end
     local key = cmd
@@ -7,7 +8,6 @@ local function ParseCommand(cmd)
     return { register = cmd, key = key }
 end
 
--- Output command Example: { registered = "/ehm-debug", key = "ehm-debug" }
 EHM.COMMANDS = {
     DEBUG = ParseCommand("/ehm-debug"),
     LIST = ParseCommand("/ehm-list"),

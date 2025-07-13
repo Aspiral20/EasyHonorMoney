@@ -30,3 +30,4 @@ EHM.FACTION = {
     Horde = "Horde",
     Neutral = "Neutral",
 }
+EHM.IsClosedMerchant = false

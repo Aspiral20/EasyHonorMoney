@@ -25,13 +25,5 @@ f:SetScript("OnEvent", function(_, event, addonName)
             local fallbackIndex = next(EHM.Items)
             EHM_DB.USED_ITEM = EHM.Items[fallbackIndex]
         end
-
-        
-        -- 🔁 Also call a short timer in case of honor updates after buying
-        -- if EHM_HonorVendor and EHM_HonorVendor:IsShown() then
-        --     C_Timer.After(0.1, function()
-        --         EHM_HonorVendor:BuildPopup()
-        --     end)
-        -- end
     end
 end)
