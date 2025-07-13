@@ -163,6 +163,14 @@ function EHM.NotificationsError(...)
     EHM.Notifications(EHM.CHAR_COLORS.red, ...)
 end
 
+function EHM.GetCurrentMerchantNPCID()
+    local guid = UnitGUID("target")
+    if guid then
+        local type, zero, server_id, instance_id, zone_uid, npc_id, spawn_uid = strsplit("-", guid)
+        return tonumber(npc_id)
+    end
+end
+
 local function IsItemAdded(itemID)
     if not EHM_DB or not EHM_DB.USED_ITEM then return false end
     for _, id in ipairs(EHM_DB.USED_ITEM) do

@@ -98,12 +98,13 @@ function EHM_HonorVendor:BuildPopup()
     local honorToUse = 4000
     local totalGold, totalSilver, totalCopper = 0, 0, 0
     local itemsBought, totalSellValue = 0, 0
+    local merchantId = EHM.GetCurrentMerchantNPCID()
 
     for i = 1, GetMerchantNumItems() do
         local itemID = EHM.GetMerchantItemID(i)
         local itemData = EHM.Items[itemID]
 
-        if itemID and itemData then
+        if itemID and itemData and merchantId == itemData.merchant.index then
             local canAfford = playerHonor >= itemData.price
 
             local btn = CreateFrame("Button", "EHM_HonorItemBtn"..itemID, EHM_HonorVendor.content, "SecureActionButtonTemplate")

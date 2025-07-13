@@ -122,6 +122,18 @@ EHM.Items = {
     --     },
     --     currencyIndex = EHM.HONOR_INDEX
     -- },
+    [35073] = {
+        index = 35073,
+        price = 47,
+        name = "Brutal Gladiator's Redoubt",
+        merchant = EHM.Merchants[12785],
+        money = {
+            gold = 13,
+            silver = 1,
+            copper = 35,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
     [28379] = {
         index = 28379,
         price = 28,
@@ -131,6 +143,30 @@ EHM.Items = {
             gold = 8,
             silver = 36,
             copper = 58,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+    [32452] = {
+        index = 32452,
+        price = 23,
+        name = "Gladiator's Reprieve",
+        merchant = EHM.Merchants[12778],
+        money = {
+            gold = 9,
+            silver = 31,
+            copper = 7,
+        },
+        currencyIndex = EHM.HONOR_INDEX
+    },
+    [28320] = {
+        index = 28320,
+        price = 28,
+        name = "Gladiator's Touch of Defeat",
+        merchant = EHM.Merchants[12778],
+        money = {
+            gold = 19,
+            silver = 52,
+            copper = 1,
         },
         currencyIndex = EHM.HONOR_INDEX
     },
