@@ -35,11 +35,11 @@ EHM.COMMANDS = {
         S2 = ParseCommand("/EHM_S"),
         S3 = ParseCommand("/ehm_s"),
     },
-    ALL = {
+    AUTO = {
         key = "ehm_auto",
-        M1 = ParseCommand("/easy-honor-money_auto"),
-        M2 = ParseCommand("/EHM_AUTO"),
-        M3 = ParseCommand("/ehm_auto"),
+        A1 = ParseCommand("/easy-honor-money_auto"),
+        A2 = ParseCommand("/EHM_AUTO"),
+        A3 = ParseCommand("/ehm_auto"),
     },
     VENDOR_STATISTIC = ParseCommand("/ehm_vstat_chat")
 }
