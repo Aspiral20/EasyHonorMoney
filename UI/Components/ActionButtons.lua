@@ -31,6 +31,8 @@ local function CreateActionButtons(frame, actionBtns, x, y, spacing, callback)
         if callback and type(callback) == "function" then
             callback(frame, frame.actionButtons)
         end
+
+        return frame
     end
 end
 

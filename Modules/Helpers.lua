@@ -75,19 +75,19 @@ function EHM.HM_GetAllHonorItemsAtVendor()
             for j = 1, costInfoCount do
                 local _, amount, currencyLink = GetMerchantItemCostItem(i, j)
                 local currencyID = tonumber(currencyLink and currencyLink:match("currency:(%d+)"))
-                local copper = EHM.GetRealTimePriceItem(itemID)
-                local gold, silver, copper = EHM.SplitMoney(copper)
+                local sellingPrice = EHM.GetRealTimePriceItem(itemID)
+                local gold, silver, copper = EHM.SplitMoney(sellingPrice)
                 local count = math.floor(4000 / amount)
 
-                local copperFor4k = count * (
+                local sellingPriceFor4k = count * (
                     (gold or 0) * 10000 +
                     (silver or 0) * 100 +
                     (copper or 0)
                 )
 
-                local gold4k = math.floor(copperFor4k / 10000)
-                local silver4k = math.floor((copperFor4k % 10000) / 100)
-                local copper4k = copperFor4k % 100
+                local gold4k = math.floor(sellingPriceFor4k / 10000)
+                local silver4k = math.floor((sellingPriceFor4k % 10000) / 100)
+                local copper4k = sellingPriceFor4k % 100
                 
                 if currencyID == EHM.HONOR_INDEX then -- Honor Points ID
                     honorItems[itemID] = {
@@ -95,13 +95,13 @@ function EHM.HM_GetAllHonorItemsAtVendor()
                         itemID = itemID,
                         honor = amount,
                         link = itemLink,
-                        sellingPrice = copper,
+                        sellingPrice = sellingPrice,
                         money = {
                             gold = gold,
                             silver = silver,
                             copper = copper,
                         },
-                        sellingPriceFor4k = copperFor4k,
+                        sellingPriceFor4k = sellingPriceFor4k,
                         moneyFor4k = {
                             gold = gold4k,
                             silver = silver4k,
@@ -113,7 +113,5 @@ function EHM.HM_GetAllHonorItemsAtVendor()
             end
         end
     end
-
-    local sortedItems = EHM.GetItemsSortedByPrice(honorItems, "sellingPriceFor4k")
-    return sortedItems
+    return honorItems
 end

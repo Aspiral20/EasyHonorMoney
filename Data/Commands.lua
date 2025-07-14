@@ -41,7 +41,7 @@ EHM.COMMANDS = {
         M2 = ParseCommand("/EHM_ALL"),
         M3 = ParseCommand("/ehm_all"),
     },
-    VENDOR_STATISTIC = ParseCommand("/ehm_vstat")
+    VENDOR_STATISTIC = ParseCommand("/ehm_vstat_chat")
 }
 
 local function RegisterSlashCommand(key, register)

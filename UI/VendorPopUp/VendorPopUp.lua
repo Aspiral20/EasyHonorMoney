@@ -1,5 +1,5 @@
-local PopUpWidth = 400
-local PopUpHeight = 160
+local PopUpWidth = EHM.VENDOR_POPUP.WIDTH
+local PopUpHeight = EHM.VENDOR_POPUP.HEIGHT
 
 local MinimizedPopUpWidth = 56
 local MinimizedPopUpHeight = 36
@@ -14,7 +14,7 @@ EHM_HonorVendor:SetBackdrop({
     edgeSize = EHM.MAIN_FRAME.BORDER_SIZE,
     insets = { left = EHM.MAIN_FRAME.BORDER_INSET, right = EHM.MAIN_FRAME.BORDER_INSET, top = EHM.MAIN_FRAME.BORDER_INSET, bottom = EHM.MAIN_FRAME.BORDER_INSET }
 })
-EHM_MainFrame:SetBackdropColor(0, 0, 0, EHM.BACKGROUND_OPACITY)
+EHM_HonorVendor:SetBackdropColor(0, 0, 0, EHM.BACKGROUND_OPACITY)
 EHM_HonorVendor:Hide()
 EHM_HonorVendor:SetMovable(true)
 EHM_HonorVendor:EnableMouse(true)
@@ -41,27 +41,27 @@ local buttonsSize = 20
 local buttonsY = -8
 
 -- Minimize button
-local minimizeBtn = CreateFrame("Button", nil, EHM_HonorVendor, "UIPanelButtonTemplate")
-minimizeBtn:SetSize(buttonsSize, buttonsSize)
-minimizeBtn:SetPoint("TOPRIGHT", EHM_HonorVendor, "TOPRIGHT", -30, buttonsY)
-minimizeBtn:SetText("-")
-local minimized = false
+-- local minimizeBtn = CreateFrame("Button", nil, EHM_HonorVendor, "UIPanelButtonTemplate")
+-- minimizeBtn:SetSize(buttonsSize, buttonsSize)
+-- minimizeBtn:SetPoint("TOPRIGHT", EHM_HonorVendor, "TOPRIGHT", -30, buttonsY)
+-- minimizeBtn:SetText("-")
+-- local minimized = false
 
-minimizeBtn:SetScript("OnClick", function()
-    minimized = not minimized
-    if minimized then
-        EHM_HonorVendor.content:Hide()
-        EHM_HonorVendor:SetSize(MinimizedPopUpWidth, MinimizedPopUpHeight) -- shrink size when minimized
-        minimizeBtn:SetText("+")
-        title:SetText(nil)
-    else
-        EHM_HonorVendor.content:Show()
-        EHM_HonorVendor:SetSize(PopUpWidth, PopUpHeight)
-        EHM_HonorVendor:BuildPopup()
-        minimizeBtn:SetText("-")
-        title:SetText(titleText)
-    end
-end)
+-- minimizeBtn:SetScript("OnClick", function()
+--     minimized = not minimized
+--     if minimized then
+--         EHM_HonorVendor.content:Hide()
+--         EHM_HonorVendor:SetSize(MinimizedPopUpWidth, MinimizedPopUpHeight) -- shrink size when minimized
+--         minimizeBtn:SetText("+")
+--         title:SetText(nil)
+--     else
+--         EHM_HonorVendor.content:Show()
+--         EHM_HonorVendor:SetSize(PopUpWidth, PopUpHeight)
+--         EHM_HonorVendor:BuildPopup()
+--         minimizeBtn:SetText("-")
+--         title:SetText(titleText)
+--     end
+-- end)
 
 local closeBtn = CreateFrame("Button", nil, EHM_HonorVendor, "UIPanelButtonTemplate")
 closeBtn:SetSize(buttonsSize, buttonsSize)
@@ -237,6 +237,7 @@ eventFrame:SetScript("OnEvent", function(self, event)
 
         if npcID and EHM.Merchants[npcID] then
             local hasHonorItems = EHM_HonorVendor:BuildPopup()
+            
             if hasHonorItems then
                 minimized = false
                 if EHM_HonorVendor.content then
@@ -247,6 +248,11 @@ eventFrame:SetScript("OnEvent", function(self, event)
                     minimizeBtn:SetText("–")
                 end
                 EHM_HonorVendor:Show()
+
+                -- Render Statistic
+                if EHM.RenderVendorStatistic and EHM.VendorStatistic:IsShown() then
+                    EHM.RenderVendorStatistic()
+                end
             else
                 EHM_HonorVendor:Hide()
             end
@@ -254,6 +260,7 @@ eventFrame:SetScript("OnEvent", function(self, event)
             EHM_HonorVendor:Hide()
         end
     elseif event == "MERCHANT_CLOSED" then
+        EHM.CACHE_RENDER_UI.VENDOR_POPUP.STATISTIC = false
         EHM_HonorVendor:Hide()
     end
 end)
@@ -267,7 +274,7 @@ EHM.CreateActionButtons(
         { name = "Equip", command = function() SlashCmdList[EHM.COMMANDS.EQUIP.key]("") end },
         { name = "Sell",  command = function() SlashCmdList[EHM.COMMANDS.SELL.key]("") end },
         { name = "Auto",  command = function() SlashCmdList[EHM.COMMANDS.ALL.key]("") end },
-        { name = "Statistic",  command = function() SlashCmdList[EHM.COMMANDS.VENDOR_STATISTIC.key]("") end },
+        { name = "Statistic" },
     },
     15,
     -39,
@@ -286,11 +293,30 @@ EHM.CreateActionButtons(
             end
         end
 
+        local function OpenStatistic()
+            local statButton = EHM_HonorVendor.actionButtons[5]
+            if statButton then
+                statButton:SetScript("OnClick", function()
+                    if not EHM.VendorStatistic then return end
+                    if EHM.VendorStatistic:IsShown() then
+                        EHM.VendorStatistic:Hide()
+                    else
+                        EHM.RenderVendorStatistic()
+                        EHM.VendorStatistic:Show()
+                    end
+                end)
+            end
+        end
+
         bagUpdateFrame:SetScript("OnEvent", function(self, event, ...)
             UpdateBuyButton()
         end)
 
         -- Also update once right after creating buttons
         UpdateBuyButton()
+        OpenStatistic()
     end
 )
+
+EHM.EHM_HonorVendor = EHM_HonorVendor
+EHM.VendorPopUpActionButtonsFrame = EHM_HonorVendor.actionButtons

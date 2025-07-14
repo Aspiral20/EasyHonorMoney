@@ -16,6 +16,13 @@ EHM.MAIN_FRAME = {
         }
     }
 }
+EHM.VENDOR_POPUP = {
+    WIDTH = 600,
+    HEIGHT = 160,
+    STATISTIC = {
+        HEIGHT = 400,
+    }
+}
 EHM.AVAILABLE_ADDONS = {
     EasyHonorMoney = true,
     EasyHonorMoneyDev = true,
@@ -31,3 +38,9 @@ EHM.FACTION = {
     Neutral = "Neutral",
 }
 EHM.IsClosedMerchant = false
+EHM.CACHE_RENDER_UI = {
+    VENDOR_POPUP = {
+        SELF = false,
+        STATISTIC = false,
+    }
+}

@@ -2,6 +2,9 @@
 EHM_MainFrame = CreateFrame("Frame", "EHM_MainFrame", UIParent, "BackdropTemplate")
 EHM_MainFrame:SetSize(EHM.MAIN_FRAME.WIDTH, EHM.MAIN_FRAME.HEIGHT)
 EHM_MainFrame:SetPoint("CENTER")
+EHM_MainFrame:SetFrameStrata("TOOLTIP")
+EHM_MainFrame:SetFrameLevel(1000)
+EHM_MainFrame:Raise()
 
 -- No border / no background
 EHM_MainFrame:SetBackdrop(nil)
