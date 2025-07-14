@@ -36,10 +36,10 @@ EHM.COMMANDS = {
         S3 = ParseCommand("/ehm_s"),
     },
     ALL = {
-        key = "ehm_all",
-        M1 = ParseCommand("/easy-honor-money_all"),
-        M2 = ParseCommand("/EHM_ALL"),
-        M3 = ParseCommand("/ehm_all"),
+        key = "ehm_auto",
+        M1 = ParseCommand("/easy-honor-money_auto"),
+        M2 = ParseCommand("/EHM_AUTO"),
+        M3 = ParseCommand("/ehm_auto"),
     },
     VENDOR_STATISTIC = ParseCommand("/ehm_vstat_chat")
 }

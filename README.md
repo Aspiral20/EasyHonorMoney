@@ -27,3 +27,5 @@ TomTom is currently the only addon that integrates with Blizzard's API for this 
 2. /ehm_b, /EHM_B, or /easy-honor-money_buy — Quickly buys items
 3. /ehm_e, /EHM_E, or /easy-honor-money_equip — Quickly equips items
 4. /ehm_s, /EHM_S, or /easy-honor-money_sell — Quickly sells items
+5. /ehm_auto - Buy, Equip, Sell. Does it until user have enough honor to buy items.
+6. /ehm_vstat_chat - print items statistic in chat.

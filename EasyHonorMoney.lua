@@ -49,18 +49,18 @@ SlashCmdList[EHM.COMMANDS.VENDOR_STATISTIC.key] = ViewVendorStatistic
 
 -- All together
 EHM.RegisterSlashCommand(
-    EHM.COMMANDS.ALL.key .. "1",
-    EHM.COMMANDS.ALL.M1.register
+    EHM.COMMANDS.AUTO.key .. "1",
+    EHM.COMMANDS.AUTO.M1.register
 )
 EHM.RegisterSlashCommand(
-    EHM.COMMANDS.ALL.key .. "2",
-    EHM.COMMANDS.ALL.M2.register
+    EHM.COMMANDS.AUTO.key .. "2",
+    EHM.COMMANDS.AUTO.M2.register
 )
 EHM.RegisterSlashCommand(
-    EHM.COMMANDS.ALL.key .. "3",
-    EHM.COMMANDS.ALL.M3.register
+    EHM.COMMANDS.AUTO.key .. "3",
+    EHM.COMMANDS.AUTO.M3.register
 )
-SlashCmdList[EHM.COMMANDS.ALL.key] = RunAutoBuyEquipSell
+SlashCmdList[EHM.COMMANDS.AUTO.key] = RunAutoBuyEquipSell
 
 -- Only Buy
 EHM.RegisterSlashCommand(
