@@ -1,26 +1,43 @@
+-- Auto mode (Buy,Equip,Sell Items)
 local function RunAutoBuyEquipSell()
     EHM.MODULES.AutoBuyEquipSellItems(EHM_DB.USED_ITEM.index)
 end
 
+-- Buy Items
 local function RunEHMBuy(itemId)
     local freeBagSlots = EHM.GetFreeBagSlots()
     EHM.MODULES.BuyItemsIfEnoughHonor(EHM_DB.USED_ITEM.index, freeBagSlots)
 end
 
+-- Equip Items
 local function RunEHMEquip()
     EHM.MODULES.EquipItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index)
 end
 
+-- Sell Items
 local function RunEHMSell()
     EHM.MODULES.SellItemsByItemID_SeparateCall(EHM_DB.USED_ITEM.index)
 end
 
--- Nice, now I need to create a statistic of items which vendor sell how do I create this?
-
-local function ViewVendorStatistic()
-    EHM.MODULES.VendorGoldStatistic()
+-- PVP
+local function ViewVendorHonorStatistic()
+    EHM.MODULES.VendorGoldStatistic(EHM.HONOR_INDEX)
 end
 
+local function ViewVendorConquestStatistic()
+    EHM.MODULES.VendorGoldStatistic(EHM.CONQUEST_INDEX)
+end
+
+-- PVE
+local function ViewVendorJusticeStatistic()
+    EHM.MODULES.VendorGoldStatistic(EHM.JUSTICE_INDEX)
+end
+
+local function ViewVendorValorStatistic()
+    EHM.MODULES.VendorGoldStatistic(EHM.VALOR_INDEX)
+end
+
+-- Main Menu
 local function OpenUI() 
     EHM_MainFrame:Show()
 end
@@ -40,12 +57,35 @@ EHM.RegisterSlashCommand(
 )
 SlashCmdList[EHM.COMMANDS.UI.key] = OpenUI
 
--- Vendor Statistic
+---PVP---
+-- Honor Merchants Statistic
 EHM.RegisterSlashCommand(
-    EHM.COMMANDS.VENDOR_STATISTIC.key .. "1",
-    EHM.COMMANDS.VENDOR_STATISTIC.register
+    EHM.COMMANDS.HONOR_STATISTIC.key .. "1",
+    EHM.COMMANDS.HONOR_STATISTIC.register
 )
-SlashCmdList[EHM.COMMANDS.VENDOR_STATISTIC.key] = ViewVendorStatistic
+SlashCmdList[EHM.COMMANDS.HONOR_STATISTIC.key] = ViewVendorHonorStatistic
+
+-- Conquest
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.CONQUEST_STATISTIC.key .. "1",
+    EHM.COMMANDS.CONQUEST_STATISTIC.register
+)
+SlashCmdList[EHM.COMMANDS.CONQUEST_STATISTIC.key] = ViewVendorConquestStatistic
+
+---PVE---
+-- Justice
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.JUSTICE_STATISTIC.key .. "1",
+    EHM.COMMANDS.JUSTICE_STATISTIC.register
+)
+SlashCmdList[EHM.COMMANDS.JUSTICE_STATISTIC.key] = ViewVendorJusticeStatistic
+
+-- Valor
+EHM.RegisterSlashCommand(
+    EHM.COMMANDS.VALOR_STATISTIC.key .. "1",
+    EHM.COMMANDS.VALOR_STATISTIC.register
+)
+SlashCmdList[EHM.COMMANDS.VALOR_STATISTIC.key] = ViewVendorValorStatistic
 
 -- All together
 EHM.RegisterSlashCommand(

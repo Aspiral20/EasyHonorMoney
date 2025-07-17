@@ -63,7 +63,8 @@ function EHM.HM_EquipOriginalItem(originalItemID, equipSlot)
     end)
 end
 
-function EHM.HM_GetAllHonorItemsAtVendor()
+function EHM.HM_GetAllCurrencyItemsAtVendor(externCurrencyIndex)
+    externCurrencyIndex = externCurrencyIndex or EHM.HONOR_INDEX
     local honorItems = {}
     
     for i = 1, GetMerchantNumItems() do
@@ -89,7 +90,7 @@ function EHM.HM_GetAllHonorItemsAtVendor()
                 local silver4k = math.floor((sellingPriceFor4k % 10000) / 100)
                 local copper4k = sellingPriceFor4k % 100
                 
-                if currencyID == EHM.HONOR_INDEX then -- Honor Points ID
+                if currencyID == externCurrencyIndex then -- Honor Points ID
                     honorItems[itemID] = {
                         index = i,
                         itemID = itemID,

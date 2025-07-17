@@ -1,4 +1,6 @@
-function VendorGoldStatistic()
+function VendorGoldStatistic(externCurrencyIndex)
+    externCurrencyIndex = externCurrencyIndex or EHM.HONOR_INDEX
+
     -- Example usage:
     -- local itemID = 28379
     -- local honorCost = EHM.GetRealTimeHonorCostForItem(itemID)
@@ -10,9 +12,9 @@ function VendorGoldStatistic()
     --     print("Honor cost not found (maybe not at vendor?).")
     -- end
 
-    local honorTable = EHM.HM_GetAllHonorItemsAtVendor()
-    if honorTable then
-        local sortedItems = EHM.GetItemsSortedByPrice(honorTable, "sellingPriceFor4k")
+    local table = EHM.HM_GetAllCurrencyItemsAtVendor(externCurrencyIndex)
+    if table then
+        local sortedItems = EHM.GetItemsSortedByPrice(table, "sellingPriceFor4k")
         for id, item in pairs(sortedItems) do
             print(string.format("ItemID %d %s costs %d%s (Merchant slot %d), selling price: %s, profit: x%d = %s / 4k%s", id, item.link, item.honor, EHM.GetHonorIcon().honorIcon, item.index, GetCoinTextureString(item.sellingPrice), item.countItemsFor4k, GetCoinTextureString(item.sellingPriceFor4k), EHM.GetHonorIcon().honorIcon))
         end

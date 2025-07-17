@@ -94,8 +94,13 @@ local function CreateMoneyInput(label, anchor, xOffset)
     return box
 end
 
+-- frame.goldInput = CreateMoneyInput(EHM.MONEY_ICONS.gold, frame.itemInput, 0)
+-- frame.silverInput = CreateMoneyInput(EHM.MONEY_ICONS.silver, frame.itemInput, 60)
+-- frame.copperInput = CreateMoneyInput(EHM.MONEY_ICONS.copper, frame.itemInput, 120)
+
 -- Submit button
 frame.searchBtn = EHM.AddonButton(frame, "Check", 80, 24)
+-- frame.searchBtn:SetPoint("TOP", frame.goldInput, "BOTTOM", 20, -10)
 frame.searchBtn:SetPoint("TOP", frame.itemInputIcon, "BOTTOM", 0, -10)
 frame.searchBtn:SetPoint("LEFT", frame.itemInputIcon, "RIGHT")
 
@@ -103,6 +108,7 @@ local resultIconSize = 35
 
 -- Result area
 frame.resultText = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+-- frame.resultText:SetPoint("TOP", frame, "TOP", 0, -(resultIconSize + 155))
 frame.resultText:SetPoint("TOP", frame.searchBtn, "BOTTOM", 0, -(resultIconSize + 40))
 frame.resultText:SetPoint("LEFT", frame.itemInputIcon, "RIGHT")
 
@@ -133,6 +139,16 @@ frame.searchBtn:SetScript("OnClick", function()
         frame.resultIcon:SetText(string.format("|T%s:14|t", defaultIconPath))
         return
     end
+
+    -- local g = tonumber(frame.goldInput:GetText()) or 0
+    -- local s = tonumber(frame.silverInput:GetText()) or 0
+    -- local c = tonumber(frame.copperInput:GetText()) or 0
+    
+    -- if g == 0 and s == 0 and c == 0 then
+    --     frame.resultText:SetText("Money values(" .. EHM.MONEY_ICONS.gold .. EHM.MONEY_ICONS.silver .. EHM.MONEY_ICONS.copper .. ") can not be empty(0).")
+    --     frame.resultIcon:SetText(string.format("|T%s:14|t", defaultIconPath))
+    --     return
+    -- end
     
     local copper = EHM.GetRealTimePriceItem(itemID)
     local g, s, c = EHM.SplitMoney(copper)
@@ -149,5 +165,6 @@ frame.searchBtn:SetScript("OnClick", function()
     local finalC = totalCopper % 100
 
     frame.resultIcon:SetText(string.format("|T%s:14|t", itemIcon))
+    -- frame.resultText:SetText(string.format("%s\nID: %d\n" .. EHM.CHAR_COLORS.gold .. " x%d = %s / 4k%s" .. EHM.CHAR_COLORS.reset, itemName, itemID, count, EHM.FormatGoldWithIcons(finalG, finalS, finalC), EHM.GetHonorIcon().honorIcon))
     frame.resultText:SetText(string.format("%s\nID: %d\n Item cost: %s \n" .. EHM.CHAR_COLORS.gold .. " x%d = %s / 4k%s" .. EHM.CHAR_COLORS.reset, itemName, itemID, GetCoinTextureString(copper), count, EHM.FormatGoldWithIcons(finalG, finalS, finalC), EHM.GetHonorIcon().honorIcon))
 end)

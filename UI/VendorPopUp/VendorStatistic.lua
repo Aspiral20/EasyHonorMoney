@@ -166,7 +166,7 @@ function EHM.RenderVendorStatistic(force)
 
     EHM.CACHE_RENDER_UI.VENDOR_POPUP.STATISTIC = true
 
-    local honorTable = EHM.HM_GetAllHonorItemsAtVendor()
+    local honorTable = EHM.HM_GetAllCurrencyItemsAtVendor()
     if not honorTable then
         EHM.NotificationsWarning("Not found honor items!")
         return
